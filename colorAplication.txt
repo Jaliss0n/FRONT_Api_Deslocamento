@@ -1,0 +1,5 @@
+#3747c0 -> roxo azulado -> barra de ferramentas
+#2ca4ac -> verde pastel
+#20b19c -> verde clarinho
+#368bb9 -> azul paslted
+
