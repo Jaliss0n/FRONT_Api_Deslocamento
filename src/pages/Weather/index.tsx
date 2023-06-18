@@ -6,10 +6,9 @@ import { useEffect, useState } from "react";
 
 const BoxBlue = styled(Box)`
   display: flex;
+  flex-direction: column;
   background-color: aliceblue;
-  border-radius: 12px;
-  width: 90%;
-  height: 90vh;
+  width: 100%;
 `;
 
 interface WeatherDataProp {
@@ -40,10 +39,12 @@ export function Weather() {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
-        height: "100vh",
-        backgroundColor: '#4470c7'
+        height: "93.3vh",
+        width: '20%',
+        backgroundColor: '#4470c7',
+        padding: "1%",
       }}
     >
       <BoxBlue>

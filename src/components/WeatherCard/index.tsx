@@ -10,9 +10,8 @@ interface WeatherCardProps {
 
 const CustomCard = styled(Card)`
     background-color: #6b2121;
-    width: 30%;
-    height: 20vh;
-    margin: 1%;
+    width: 100%;
+    margin: 5% 0;
 `
 
 const WeatherCard: React.FC<WeatherCardProps> = ({

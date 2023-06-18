@@ -26,6 +26,8 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import WeatherCard from "../WeatherCard";
 import { Weather } from "@/pages/Weather";
 import Clients from "@/pages/Clients";
+import switchScreen from "../context/switchScreen";
+import { useNavContext } from "../context/navProvider";
 
 const drawerWidth = 280;
 
@@ -46,6 +48,9 @@ const CustomToolbar = styled(Toolbar)`
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const {numberPag} = useNavContext();
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -78,21 +83,25 @@ export default function Header(props: Props) {
         nameAccordeon="Clientes"
         textArray={["Cadastrar", "Visualizar"]}
         iconsArray={[<PersonAddAlt1Icon />, <GroupsIcon />]}
+        pages={[0, 1]}
       />
       <AccordeonCustom
         nameAccordeon="Condutor"
         textArray={["Cadastrar", "Visualizar"]}
         iconsArray={[<PersonAddAlt1Icon />, <GroupsIcon />]}
+        pages={[2, 3]}
       />
       <AccordeonCustom
         nameAccordeon="Veiculo"
         textArray={["Cadastrar", "Visualizar"]}
         iconsArray={[<PersonAddAlt1Icon />, <GroupsIcon />]}
+        pages={[4, 5]}
       />
       <AccordeonCustom
         nameAccordeon="Deslocamento"
         textArray={["Cadastrar", "Visualizar"]}
         iconsArray={[<PersonAddAlt1Icon />, <GroupsIcon />]}
+        pages={[6, 7]}
       />
       <Box sx={{ marginTop: "auto" }}>
         <Typography color="white" variant="body1">
@@ -111,6 +120,7 @@ export default function Header(props: Props) {
       <AppBar
         position="fixed"
         sx={{
+          backgroundColor: "#3747c0",
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
@@ -135,14 +145,13 @@ export default function Header(props: Props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -176,8 +185,7 @@ export default function Header(props: Props) {
         }}
       >
         <Toolbar />
-        <Clients/>
-        {/* <Weather /> */}
+        {switchScreen(numberPag)}
       </Box>
     </Box>
   );

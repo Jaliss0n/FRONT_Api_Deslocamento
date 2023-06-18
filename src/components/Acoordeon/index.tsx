@@ -18,27 +18,36 @@ import {
   ListItemText,
 } from "@mui/material";
 import styled from "@emotion/styled";
+import { useNavContext } from "../context/navProvider";
 
 const BlueListIcon = styled(ListItemButton)`
   background-color: #4154e4;
   margin: 10px 0 10px 0;
   border-radius: 12px;
-  &:hover{
+  &:hover {
     background-color: #3747c5;
   }
 `;
 
 interface AccordeonProps {
-    nameAccordeon: string;
-    textArray: string[];
-    iconsArray: React.ReactElement<IconProps>[];
+  nameAccordeon: string;
+  textArray: string[];
+  iconsArray: React.ReactElement<IconProps>[];
+  pages: number[];
 }
 
-export default function AccordeonCustom({nameAccordeon, textArray,iconsArray}: AccordeonProps) {
+export default function AccordeonCustom({
+  nameAccordeon,
+  textArray,
+  iconsArray,
+  pages,
+}: AccordeonProps) {
+
+  const {setNumberPag} = useNavContext();
 
   return (
-    <div style={{ marginBottom: '10%' }} >
-      <Accordion sx={{ backgroundColor: "#5164f0", margin: '10% 0 0 0' }}>
+    <div style={{ marginBottom: "10%" }}>
+      <Accordion sx={{ backgroundColor: "#5164f0", margin: "10% 0 0 0" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: "#fff" }} />}
           aria-controls="panel1a-content"
@@ -51,16 +60,21 @@ export default function AccordeonCustom({nameAccordeon, textArray,iconsArray}: A
         <AccordionDetails>
           <List>
             <Divider color="#fff" sx={{ margin: "1% 0 1% 0" }} />
-            {textArray.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <BlueListIcon onClick={() => console.log(index)}>
-                  <ListItemIcon sx={{ color: "#ffffff" }}>
-                    {iconsArray[index]}
-                  </ListItemIcon>
-                  <ListItemText sx={{ color: "#ffffff" }} primary={text} />
-                </BlueListIcon>
-              </ListItem>
-            ))}
+            {textArray.map((text, index) => {
+              const page = pages[index];
+              const icon = iconsArray[index];
+
+              return (
+                <ListItem key={text} disablePadding>
+                  <BlueListIcon onClick={() => setNumberPag(page)}>
+                    <ListItemIcon sx={{ color: "#ffffff" }}>
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText sx={{ color: "#ffffff" }} primary={text} />
+                  </BlueListIcon>
+                </ListItem>
+              );
+            })}
           </List>
         </AccordionDetails>
       </Accordion>
