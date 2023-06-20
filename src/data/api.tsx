@@ -1,0 +1,1 @@
+export const apiUrl = "https://api-deslocamento.herokuapp.com/api/v1"

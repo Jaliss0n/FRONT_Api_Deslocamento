@@ -1,4 +1,5 @@
 import WeatherCard from "@/components/WeatherCard";
+import { apiUrl } from "@/data/api";
 import styled from "@emotion/styled";
 import { Box, Divider, Typography } from "@mui/material";
 import axios from "axios";
@@ -23,7 +24,7 @@ export function Weather() {
   async function getWeather() {
     try {
       await axios
-        .get("https://api-deslocamento.herokuapp.com/api/v1/WeatherForecast")
+        .get(`${apiUrl}/WeatherForecast`)
         .then((data) => setWeatherData(data.data));
     } catch (error) {
       console.error(error);
@@ -38,23 +39,31 @@ export function Weather() {
     <Box
       sx={{
         display: {
-          xs: 'none',
-          sm: 'flex'
+          xs: "none",
+          sm: "flex",
         },
         justifyContent: "flex-start",
         alignItems: "center",
-        width: '15%',
-        backgroundColor: '#3747c0',
+        width: "15%",
+        backgroundColor: "#3747c0",
         padding: "1%",
-        position: 'absolute',
+        position: "absolute",
         right: 0,
-        height: '100vh',
-        
+        height: "100vh",
       }}
     >
       <BoxBlue>
-        <Typography variant="body1" color='white' >Previsão dos próximos 5 dias</Typography>
-        <Divider color='white' />
+        <Typography
+          sx={{
+            color: "#fff",
+            textAlign: 'center'
+          }}
+          variant="body1"
+          color="white"
+        >
+          Previsão dos próximos <br/> 5 dias
+        </Typography>
+        <Divider color="white" />
         {weatherData.map((data, index) => (
           <WeatherCard key={index} {...data} />
         ))}

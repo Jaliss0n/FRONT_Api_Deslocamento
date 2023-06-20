@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import { Box, Button, Typography } from "@mui/material";
 
 interface PropsModal {
-    nome: string;
-    handleCloseDelete: () => void;
-    handleApagar: () => void;
+  nome: string;
+  handleCloseDelete: () => void;
+  handleApagar: () => void;
 }
 
 const ModalDeleteStiled = styled(Box)`
@@ -30,7 +30,11 @@ const ButtonAreaDelete = styled(Box)`
   justify-content: flex-end;
 `;
 
-export default function ModalDelete({nome, handleCloseDelete, handleApagar}: PropsModal) {
+export default function ModalDelete({
+  nome,
+  handleCloseDelete,
+  handleApagar,
+}: PropsModal) {
   return (
     <ModalDeleteStiled>
       <Typography id="modal-modal-title" variant="h6" component="h2">

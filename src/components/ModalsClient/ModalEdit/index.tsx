@@ -2,9 +2,9 @@ import { AreaInputs } from "@/pages/ClientsGroup/Clients";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { WhiteTextField } from "../WTextField";
+import { WhiteTextField } from "../../WTextField";
 import { Button, Divider, Typography } from "@mui/material";
-import { AutoCompleteWhiteStyles } from "../autoCompleteWhite";
+import { AutoCompleteWhiteStyles } from "../../autoCompleteWhite";
 import { estados } from "@/data";
 import styled from "@emotion/styled";
 
@@ -22,6 +22,15 @@ const ModalEditiStyled = styled.form`
   @media screen and (max-width: 900px) {
     width: 80%;
     padding: 5%;
+  }
+`;
+
+export const ButtonSubmit = styled(Button)`
+  margin-top: 1%;
+  background-color: #3747c0;
+  color: white;
+  :hover {
+    background-color: #2534a6;
   }
 `;
 
@@ -213,7 +222,9 @@ export function ModalEdit({
           )}
         />
       </AreaInputs>
-      <Button type="submit">Atualizar</Button>
+      <ButtonSubmit fullWidth type="submit">
+        Atualizar
+      </ButtonSubmit>
     </ModalEditiStyled>
   );
 }

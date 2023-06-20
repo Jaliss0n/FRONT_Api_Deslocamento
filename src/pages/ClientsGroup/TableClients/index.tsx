@@ -1,14 +1,11 @@
-import { CustomBox } from "../Clients";
+import { CustomBox, TitleCard } from "../Clients";
 import { Weather } from "../../Weather";
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
-  Alert,
-  AlertTitle,
   Box,
   Button,
   ButtonGroup,
-  Snackbar,
 } from "@mui/material";
 import axios from "axios";
 import styled from "@emotion/styled";
@@ -16,24 +13,33 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
-import ModalDelete from "@/components/ModalDelete";
-import { ModalEdit } from "@/components/ModalEdit";
+import ModalDelete from "@/components/ModalsClient/ModalDelete";
+import { ModalEdit } from "@/components/ModalsClient/ModalEdit";
+import { Snackbars } from "@/components/Snackbars";
+import { ModalView } from "@/components/ModalsClient/ModalView";
+import { apiUrl } from "@/data/api";
 
 const TableContainer = styled(Box)`
-  width: 50%;
+  position: relative;
+  width: 70%;
   background-color: #384ce3;
+  border-radius: 12px;
+  padding: 3%;
 
   @media screen and (max-width: 900px) {
     width: 100%;
     height: 100vh;
+    border-radius: 0px;
   }
 `;
 
-const SnackbarContainer = styled(Snackbar)`
-  position: fixed;
-  left: 0;
-  bottom: 0;
-`;
+
+const DataGridWhite = styled(DataGrid)({
+  "& .MuiTablePagination-selectLabel.css-pdct74-MuiTablePagination-selectLabel, .MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-194a1fa-MuiSelect-select-MuiInputBase-input, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiSelect-icon.MuiTablePagination-selectIcon.MuiSelect-iconStandard.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon, .MuiTablePagination-displayedRows.css-levciy-MuiTablePagination-displayedRows, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root":
+    {
+      color: "white",
+    },
+});
 
 interface TableClients {
   id: number;
@@ -50,8 +56,14 @@ interface PropsEdit {
   uf: string;
 }
 
+interface PropsView extends PropsEdit {
+  numeroDocumento: string;
+  tipoDocumento: string;
+}
+
 export function TableClients() {
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
+  const [openSnackbarEdit, setOpenSnackbarEdit] = React.useState(false);
   const [dataTable, setDataTable] = React.useState<TableClients[]>([
     {
       id: 0,
@@ -63,7 +75,7 @@ export function TableClients() {
   async function getClientsData() {
     try {
       await axios
-        .get("https://api-deslocamento.herokuapp.com/api/v1/Cliente")
+        .get(`${apiUrl}/Cliente`)
         .then((data) => {
           const response = data.data;
           setDataTable(response);
@@ -79,7 +91,8 @@ export function TableClients() {
     {
       field: "id",
       headerName: "ID",
-      width: 100,
+      minWidth: 100,
+      flex: 1,
       disableColumnMenu: true,
       sortable: false,
     },
@@ -87,6 +100,7 @@ export function TableClients() {
       field: "nome",
       headerName: "Nome",
       width: 150,
+      flex: 1,
       disableColumnMenu: true,
       sortable: false,
     },
@@ -94,13 +108,15 @@ export function TableClients() {
       field: "cidade",
       headerName: "Cidade",
       width: 150,
+      flex: 1,
       disableColumnMenu: true,
       sortable: false,
     },
     {
       field: "acoes",
       headerName: "Ações",
-      width: 180,
+      minWidth: 180,
+      flex: 1,
       disableColumnMenu: true,
       sortable: false,
       renderCell: (data) => {
@@ -112,15 +128,38 @@ export function TableClients() {
         const handleOpenEdit = () => setOpenEdit(true);
         const handleCloseEdit = () => setOpenEdit(false);
 
-        const handleVisualizar = () => {
-          console.log(`Visualizar item ${data.row.id}`);
+        const [openView, setOpenView] = React.useState(false);
+        const handleOpenView = () => setOpenView(true);
+        const handleCloseView = () => setOpenView(false);
+        const [responseView, setResponseView] = React.useState<PropsView>({
+          tipoDocumento: 'Carregando...',
+          numeroDocumento: 'Carregando...',
+          nome: "Carregando...",
+          logradouro: "Carregando...",
+          numero: "Carregando...",
+          bairro: "Carregando...",
+          cidade: "Carregando...",
+          uf: "Carregando...",
+        });
+
+        const handleVisualizar = async () => {
+          try {
+            await axios
+              .get(
+                `${apiUrl}/Cliente/${data.row.id}`
+              )
+              .then((data) => {
+                setResponseView(data.data);
+                handleOpenView();
+              });
+          } catch (error) {}
         };
 
         const handleEditar = async (response: PropsEdit) => {
           try {
             await axios
               .put(
-                `https://api-deslocamento.herokuapp.com/api/v1/Cliente/${data.row.id}`,
+                `${apiUrl}/Cliente/${data.row.id}`,
                 {
                   id: data.row.id,
                   nome: response.nome,
@@ -132,9 +171,11 @@ export function TableClients() {
                 }
               )
               .then(() => {
-                handleShowSnackbar();
+                handleShowSnackbarEdit();
+                handleCloseEdit();
                 getClientsData();
-              }).catch((erro) => console.log(erro));
+              })
+              .catch((erro) => console.log(erro));
           } catch (error) {}
         };
 
@@ -142,13 +183,13 @@ export function TableClients() {
           try {
             await axios
               .delete(
-                `https://api-deslocamento.herokuapp.com/api/v1/Cliente/${data.row.id}`,
+                `${apiUrl}/Cliente/${data.row.id}`,
                 {
                   data: { id: data.row.id },
                 }
               )
               .then(() => {
-                handleShowSnackbar();
+                handleShowSnackbarDelete();
                 getClientsData();
               });
           } catch (error) {}
@@ -161,9 +202,9 @@ export function TableClients() {
                 color="inherit"
                 sx={{ color: "black", margin: "0 2%" }}
                 variant="contained"
-                onClick={handleVisualizar}
+                onClick={() => handleVisualizar()}
               >
-                <VisibilityIcon />
+                <VisibilityIcon sx={{ color: "#464242" }} />
               </Button>
               <Button
                 color="primary"
@@ -182,6 +223,26 @@ export function TableClients() {
                 <DeleteIcon />
               </Button>
             </ButtonGroup>
+
+            <Modal
+              open={openView}
+              onClose={handleCloseView}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <ModalView
+                tipoDocumento={responseView.tipoDocumento}
+                numeroDocumento={responseView.numeroDocumento}
+                nome={responseView.nome}
+                logradouro={responseView.logradouro}
+                numero={responseView.numero}
+                bairro={responseView.bairro}
+                cidade={responseView.cidade}
+                uf={responseView.uf}
+                handleClose={handleCloseView}
+
+              />
+            </Modal>
 
             <Modal
               open={openEdit}
@@ -218,21 +279,20 @@ export function TableClients() {
     },
   ];
 
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
-
-  const handleShowSnackbar = () => {
-    setOpenSnackbar(true);
-  };
+  const handleSnackbarCloseDelete = () => setOpenSnackbarDelete(false);
+  const handleShowSnackbarDelete = () => setOpenSnackbarDelete(true);
+  const handleSnackbarCloseEdit = () => setOpenSnackbarEdit(false);
+  const handleShowSnackbarEdit = () => setOpenSnackbarEdit(true);
 
   return (
     <CustomBox>
       <TableContainer>
-        <DataGrid
+        <TitleCard>Tabela Clientes</TitleCard>
+        <DataGridWhite
           rows={dataTable}
           columns={columns}
-          sx={{ color: "white", padding: "2%" }}
+          autoHeight
+          sx={{ color: "white", border: 'none', }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -240,22 +300,22 @@ export function TableClients() {
             columns: {
               columnVisibilityModel: {
                 id: false,
-                cidade: false,
               },
             },
           }}
           pageSizeOptions={[5, 10]}
         />
       </TableContainer>
-      <SnackbarContainer
-        open={openSnackbar}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-      >
-        <Alert severity="success">
-          <AlertTitle>Cliente Apagado com sucesso!</AlertTitle>
-        </Alert>
-      </SnackbarContainer>
+      <Snackbars
+        openSnackbar={openSnackbarDelete}
+        handleSnackbarClose={handleSnackbarCloseDelete}
+        message="Cliente Apagado com sucesso!"
+      />
+      <Snackbars
+        openSnackbar={openSnackbarEdit}
+        handleSnackbarClose={handleSnackbarCloseEdit}
+        message="Cliente Atualizado com sucesso!"
+      />
       <Weather />
     </CustomBox>
   );

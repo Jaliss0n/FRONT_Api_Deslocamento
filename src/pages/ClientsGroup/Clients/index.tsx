@@ -5,13 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
 import { WhiteTextField } from "@/components/WTextField";
 import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
-import { Snackbar } from "@mui/material";
-import { Alert, AlertTitle } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { estados, typeDoc } from "@/data";
 import { Weather } from "../../Weather";
-import { useNavContext } from "@/components/context/navProvider";
+import { Snackbars } from "@/components/Snackbars";
+import { apiUrl } from "@/data/api";
 
 export const CustomBox = styled(Box)`
   display: flex;
@@ -46,7 +45,7 @@ const CustomFormCard = styled.form`
   }
 `;
 
-const TitleCard = styled(Typography)`
+export const TitleCard = styled(Typography)`
   color: white;
   background-color: #2ca4ac;
   position: absolute;
@@ -60,7 +59,7 @@ const TitleCard = styled(Typography)`
   @media screen and (max-width: 900px) {
     position: static;
     padding: 3%;
-    margin: 3% 0;
+    margin: 3% 0%;
     text-align: center;
     font-size: 1.2rem;
   }
@@ -90,7 +89,6 @@ export const createClientSchema = z.object({
 export default function Clients() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-
   type FormData = {
     tipoDocumento: string;
     numeroDocumento: string;
@@ -110,12 +108,10 @@ export default function Clients() {
     resolver: zodResolver(createClientSchema),
   });
 
-  const { setNumberPag } = useNavContext();
-
   const onSubmit: SubmitHandler<DeepPartial<FormData>> = async (data) => {
     try {
       await axios
-        .post("https://api-deslocamento.herokuapp.com/api/v1/Cliente", data)
+        .post(`${apiUrl}/Cliente`, data)
         .then((e) => {
           handleShowSnackbar();
         });
@@ -323,17 +319,12 @@ export default function Clients() {
         >
           Enviar
         </Button>
-
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={3000}
-          onClose={handleSnackbarClose}
-        >
-          <Alert severity="success">
-            <AlertTitle>Cliente Cadastrado com sucesso!</AlertTitle>
-            Clique no botão visualizar do menu de Clientes para executar ações!
-          </Alert>
-        </Snackbar>
+        <Snackbars
+          openSnackbar={openSnackbar}
+          handleSnackbarClose={handleSnackbarClose}
+          message="Cliente Cadastrado com sucesso!"
+          description="Clique no botão visualizar do menu de Clientes para executar ações!"
+        />
       </CustomFormCard>
       <Weather />
     </CustomBox>
