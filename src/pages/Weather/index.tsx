@@ -1,13 +1,12 @@
 import WeatherCard from "@/components/WeatherCard";
 import styled from "@emotion/styled";
-import { Box } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const BoxBlue = styled(Box)`
   display: flex;
   flex-direction: column;
-  background-color: aliceblue;
   width: 100%;
 `;
 
@@ -38,16 +37,24 @@ export function Weather() {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: {
+          xs: 'none',
+          sm: 'flex'
+        },
         justifyContent: "flex-start",
         alignItems: "center",
-        height: "93.3vh",
-        width: '20%',
-        backgroundColor: '#4470c7',
+        width: '15%',
+        backgroundColor: '#3747c0',
         padding: "1%",
+        position: 'absolute',
+        right: 0,
+        height: '100vh',
+        
       }}
     >
       <BoxBlue>
+        <Typography variant="body1" color='white' >Previsão dos próximos 5 dias</Typography>
+        <Divider color='white' />
         {weatherData.map((data, index) => (
           <WeatherCard key={index} {...data} />
         ))}

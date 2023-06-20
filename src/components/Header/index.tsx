@@ -5,39 +5,23 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import logo from "../../../images/logo-naty.png";
 import styled from "@emotion/styled";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import AccordeonCustom from "../Acoordeon";
 import GroupsIcon from "@mui/icons-material/Groups";
-import WeatherCard from "../WeatherCard";
-import { Weather } from "@/pages/Weather";
-import Clients from "@/pages/Clients";
 import switchScreen from "../context/switchScreen";
 import { useNavContext } from "../context/navProvider";
 
 const drawerWidth = 280;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
+
 const CustomToolbar = styled(Toolbar)`
   display: flex;
   justify-content: center;
@@ -121,8 +105,7 @@ export default function Header(props: Props) {
         position="fixed"
         sx={{
           backgroundColor: "#3747c0",
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          display: {sm: 'none'}
         }}
       >
         <Toolbar>
@@ -183,8 +166,8 @@ export default function Header(props: Props) {
           flexGrow: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
-      >
-        <Toolbar />
+      > 
+        <Toolbar sx={{ display: {sm: 'none'}}} />
         {switchScreen(numberPag)}
       </Box>
     </Box>
