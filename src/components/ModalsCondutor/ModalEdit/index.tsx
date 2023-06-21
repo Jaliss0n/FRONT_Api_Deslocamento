@@ -61,6 +61,7 @@ PropsEdit) {
           disablePortal
           fullWidth
           id="catergoriaHabilitacao"
+          defaultValue={catergoriaHabilitacao.replace(/[\[\]"\s\\]/g, '')}
           options={categorias}
           sx={{
             margin: "2% 0",
@@ -73,7 +74,7 @@ PropsEdit) {
               helperText={errors.catergoriaHabilitacao?.message?.toString()}
               label={
                 <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                  {catergoriaHabilitacao.replace(/[\[\]"\s\\]/g, '')}
+                  Adicionar Categoria de Habilitação
                 </Typography>
               }
             />

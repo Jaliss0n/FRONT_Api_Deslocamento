@@ -195,8 +195,10 @@ export default function Condutor() {
           openSnackbar={openSnackbar}
           handleSnackbarClose={handleSnackbarClose}
           message="Condutor Cadastrado com sucesso!"
-          description="Clique no botão visualizar do menu de Condutor para executar ações!"
+          description="Clique no botão visualizar para executar ações!"
           variant="success"
+          visualizar={true}
+          page={3}
         />
       </CustomFormCard>
       <Weather />

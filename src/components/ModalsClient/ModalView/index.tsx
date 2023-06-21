@@ -4,7 +4,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { ButtonSubmit } from "../ModalEdit";
 
-const ModalViewStyled = styled(Box)`
+export const ModalViewStyled = styled(Box)`
   position: absolute;
   top: 50%;
   left: 50%;

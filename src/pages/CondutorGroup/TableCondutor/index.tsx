@@ -239,9 +239,12 @@ export function TableCondutor() {
   const handleShowSnackbarEditErro = () => setOpenSnackbarEditErro(true);
 
   const dataFormatedTable = dataTable.map((data) => {
-    data.catergoriaHabilitacao = data.catergoriaHabilitacao.replace(/[\[\]"\s\\]/g, "");
+    data.catergoriaHabilitacao = data.catergoriaHabilitacao.replace(
+      /[\[\]"\s\\]/g,
+      ""
+    );
     return data;
-});
+  });
 
   return (
     <CustomBox>
@@ -270,18 +273,27 @@ export function TableCondutor() {
         handleSnackbarClose={handleSnackbarCloseDelete}
         message="Condutor Apagado com sucesso!"
         variant="success"
+        visualizar={false}
+        page={0}
+
       />
       <Snackbars
         openSnackbar={openSnackbarEdit}
         handleSnackbarClose={handleSnackbarCloseEdit}
         message="Condutor Atualizado com sucesso!"
         variant="success"
+        visualizar={false}
+        page={0}
+
       />
       <Snackbars
         openSnackbar={openSnackbarEditErro}
         handleSnackbarClose={handleSnackbarCloseEditErro}
         message="A Data de validade não pode ser menor que a atual!"
         variant="warning"
+        visualizar={false}
+        page={0}
+
       />
       <Weather />
     </CustomBox>

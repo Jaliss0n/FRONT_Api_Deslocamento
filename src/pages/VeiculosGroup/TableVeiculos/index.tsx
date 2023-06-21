@@ -1,12 +1,8 @@
-import { CustomBox, TitleCard } from "../Clients";
+import { CustomBox, TitleCard } from "../../ClientsGroup/Clients";
 import { Weather } from "../../Weather";
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-} from "@mui/material";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import axios from "axios";
 import styled from "@emotion/styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -14,72 +10,49 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
 import ModalDelete from "@/components/ModalsClient/ModalDelete";
-import { ModalEdit } from "@/components/ModalsClient/ModalEdit";
 import { Snackbars } from "@/components/Snackbars";
-import { ModalView } from "@/components/ModalsClient/ModalView";
 import { apiUrl } from "@/data/api";
+import {
+  DataGridWhite,
+  TableContainer,
+} from "@/pages/ClientsGroup/TableClients";
+import { ModalEdit } from "@/components/ModalsVeiculo/ModalEdit";
+import { ModalView } from "@/components/ModalsVeiculo/ModalView";
 
-export const TableContainer = styled(Box)`
-  position: relative;
-  width: 70%;
-  background-color: #384ce3;
-  border-radius: 12px;
-  padding: 3%;
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    height: 100vh;
-    border-radius: 0px;
-  }
-`;
-
-
-export const DataGridWhite = styled(DataGrid)({
-  "& .MuiTablePagination-selectLabel.css-pdct74-MuiTablePagination-selectLabel, .MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-194a1fa-MuiSelect-select-MuiInputBase-input, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiSelect-icon.MuiTablePagination-selectIcon.MuiSelect-iconStandard.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon, .MuiTablePagination-displayedRows.css-levciy-MuiTablePagination-displayedRows, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root":
-    {
-      color: "white",
-    },
-});
-
-interface TableClients {
+interface TableVeiculos {
   id: number;
-  nome: string;
-  cidade: string;
+  placa: string;
+  marcaModelo: string;
 }
 
+interface PropsView extends TableVeiculos {
+  anoFabricacao: number;
+  kmAtual: number;
+}
 interface PropsEdit {
-  nome: string;
-  logradouro: string;
-  numero: string;
-  bairro: string;
-  cidade: string;
-  uf: string;
+  marcaModelo: string;
+  anoFabricacao: number;
+  kmAtual: string;
 }
 
-interface PropsView extends PropsEdit {
-  numeroDocumento: string;
-  tipoDocumento: string;
-}
-
-export function TableClients() {
+export function TableVeiculos() {
   const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
   const [openSnackbarEdit, setOpenSnackbarEdit] = React.useState(false);
-  const [dataTable, setDataTable] = React.useState<TableClients[]>([
+  const [openSnackbarEditErro, setOpenSnackbarEditErro] = React.useState(false);
+  const [dataTable, setDataTable] = React.useState<TableVeiculos[]>([
     {
       id: 0,
-      nome: "Carregando",
-      cidade: "Carregando",
+      placa: "Carregando",
+      marcaModelo: "Carregando",
     },
   ]);
 
   async function getClientsData() {
     try {
-      await axios
-        .get(`${apiUrl}/Cliente`)
-        .then((data) => {
-          const response = data.data;
-          setDataTable(response);
-        });
+      await axios.get(`${apiUrl}/Veiculo`).then((data) => {
+        const response = data.data;
+        setDataTable(response);
+      });
     } catch (error) {}
   }
 
@@ -97,16 +70,16 @@ export function TableClients() {
       sortable: false,
     },
     {
-      field: "nome",
-      headerName: "Nome",
+      field: "placa",
+      headerName: "Placa",
       width: 150,
       flex: 1,
       disableColumnMenu: true,
       sortable: false,
     },
     {
-      field: "cidade",
-      headerName: "Cidade",
+      field: "marcaModelo",
+      headerName: "marcaModelo",
       width: 150,
       flex: 1,
       disableColumnMenu: true,
@@ -132,62 +105,52 @@ export function TableClients() {
         const handleOpenView = () => setOpenView(true);
         const handleCloseView = () => setOpenView(false);
         const [responseView, setResponseView] = React.useState<PropsView>({
-          tipoDocumento: 'Carregando...',
-          numeroDocumento: 'Carregando...',
-          nome: "Carregando...",
-          logradouro: "Carregando...",
-          numero: "Carregando...",
-          bairro: "Carregando...",
-          cidade: "Carregando...",
-          uf: "Carregando...",
+          id: 0,
+          placa: "Carregando...",
+          marcaModelo: "Carregando...",
+          anoFabricacao: 0,
+          kmAtual: 0,
         });
 
         const handleVisualizar = async () => {
           try {
-            await axios
-              .get(
-                `${apiUrl}/Cliente/${data.row.id}`
-              )
-              .then((data) => {
-                setResponseView(data.data);
-                handleOpenView();
-              });
+            await axios.get(`${apiUrl}/Veiculo/${data.row.id}`).then((data) => {
+              setResponseView(data.data);
+              handleOpenView();
+            });
           } catch (error) {}
         };
 
         const handleEditar = async (response: PropsEdit) => {
-          try {
-            await axios
-              .put(
-                `${apiUrl}/Cliente/${data.row.id}`,
-                {
-                  id: data.row.id,
-                  nome: response.nome,
-                  logradouro: response.logradouro,
-                  numero: response.numero,
-                  bairro: response.bairro,
-                  cidade: response.cidade,
-                  uf: response.uf,
+            if(response.kmAtual !== undefined) {
+                const kmAtualInt = parseInt(response.kmAtual);
+                try {
+                  await axios
+                    .put(`${apiUrl}/Veiculo/${data.row.id}`, {
+                        id: data.row.id,
+                        anoFabricacao: response.anoFabricacao,
+                        kmAtual: kmAtualInt,
+                        marcaModelo: response.marcaModelo
+                    })
+                    .then(() => {
+                      handleShowSnackbarEdit();
+                      handleCloseEdit();
+                      getClientsData();
+                    });
+                } catch (error) {
+                  console.log(error);
+                  handleShowSnackbarEditErro();
                 }
-              )
-              .then(() => {
-                handleShowSnackbarEdit();
-                handleCloseEdit();
-                getClientsData();
-              })
-              .catch((erro) => console.log(erro));
-          } catch (error) {}
-        };
+              };
+
+            }
 
         const handleApagar = async () => {
           try {
             await axios
-              .delete(
-                `${apiUrl}/Cliente/${data.row.id}`,
-                {
-                  data: { id: data.row.id },
-                }
-              )
+              .delete(`${apiUrl}/Veiculo/${data.row.id}`, {
+                data: { id: data.row.id },
+              })
               .then(() => {
                 handleShowSnackbarDelete();
                 getClientsData();
@@ -231,16 +194,11 @@ export function TableClients() {
               aria-describedby="modal-modal-description"
             >
               <ModalView
-                tipoDocumento={responseView.tipoDocumento}
-                numeroDocumento={responseView.numeroDocumento}
-                nome={responseView.nome}
-                logradouro={responseView.logradouro}
-                numero={responseView.numero}
-                bairro={responseView.bairro}
-                cidade={responseView.cidade}
-                uf={responseView.uf}
+                placa={responseView.placa}
+                marcaModelo={responseView.marcaModelo}
+                anoFabricacao={responseView.anoFabricacao}
+                kmAtual={responseView.kmAtual}
                 handleClose={handleCloseView}
-
               />
             </Modal>
 
@@ -251,12 +209,9 @@ export function TableClients() {
               aria-describedby="modal-modal-description"
             >
               <ModalEdit
-                nome={data.row.nome}
-                logradouro={data.row.logradouro}
-                numero={data.row.numero}
-                bairro={data.row.bairro}
-                cidade={data.row.cidade}
-                uf={data.row.uf}
+                marcaModelo={data.row.marcaModelo}
+                anoFabricacao={data.row.anoFabricacao}
+                kmAtual={data.row.kmAtual}
                 handleEditar={handleEditar}
               />
             </Modal>
@@ -268,7 +223,7 @@ export function TableClients() {
               aria-describedby="modal-modal-description"
             >
               <ModalDelete
-                nome={data.row.nome}
+                nome={data.row.marcaModelo}
                 handleApagar={handleApagar}
                 handleCloseDelete={handleCloseDelete}
               />
@@ -283,16 +238,18 @@ export function TableClients() {
   const handleShowSnackbarDelete = () => setOpenSnackbarDelete(true);
   const handleSnackbarCloseEdit = () => setOpenSnackbarEdit(false);
   const handleShowSnackbarEdit = () => setOpenSnackbarEdit(true);
+  const handleSnackbarCloseEditErro = () => setOpenSnackbarEditErro(false);
+  const handleShowSnackbarEditErro = () => setOpenSnackbarEditErro(true);
 
   return (
     <CustomBox>
       <TableContainer>
-        <TitleCard>Tabela Clientes</TitleCard>
+        <TitleCard>Tabela Veiculos</TitleCard>
         <DataGridWhite
           rows={dataTable}
           columns={columns}
           autoHeight
-          sx={{ color: "white", border: 'none', }}
+          sx={{ color: "white", border: "none" }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -309,7 +266,7 @@ export function TableClients() {
       <Snackbars
         openSnackbar={openSnackbarDelete}
         handleSnackbarClose={handleSnackbarCloseDelete}
-        message="Cliente Apagado com sucesso!"
+        message="Veiculo Apagado com sucesso!"
         variant="success"
         visualizar={false}
         page={0}
@@ -317,11 +274,18 @@ export function TableClients() {
       <Snackbars
         openSnackbar={openSnackbarEdit}
         handleSnackbarClose={handleSnackbarCloseEdit}
-        message="Cliente Atualizado com sucesso!"
+        message="Veiculo Atualizado com sucesso!"
         variant="success"
         visualizar={false}
         page={0}
-
+      />
+      <Snackbars
+        openSnackbar={openSnackbarEditErro}
+        handleSnackbarClose={handleSnackbarCloseEditErro}
+        message="A Data de validade não pode ser menor que a atual!"
+        variant="warning"
+        visualizar={false}
+        page={0}
       />
       <Weather />
     </CustomBox>

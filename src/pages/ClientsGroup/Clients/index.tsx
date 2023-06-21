@@ -113,11 +113,9 @@ export default function Clients() {
 
   const onSubmit: SubmitHandler<DeepPartial<FormData>> = async (data) => {
     try {
-      await axios
-        .post(`${apiUrl}/Cliente`, data)
-        .then((e) => {
-          handleShowSnackbar();
-        });
+      await axios.post(`${apiUrl}/Cliente`, data).then((e) => {
+        handleShowSnackbar();
+      });
     } catch (error) {}
   };
 
@@ -326,8 +324,10 @@ export default function Clients() {
           openSnackbar={openSnackbar}
           handleSnackbarClose={handleSnackbarClose}
           message="Cliente Cadastrado com sucesso!"
-          description="Clique no botão visualizar do menu de Clientes para executar ações!"
+          description="Clique no botão visualizar para executar ações!"
           variant="success"
+          visualizar={true}
+          page={1}
         />
       </CustomFormCard>
       <Weather />

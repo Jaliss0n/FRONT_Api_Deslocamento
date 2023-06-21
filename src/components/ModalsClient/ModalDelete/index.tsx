@@ -38,7 +38,7 @@ export default function ModalDelete({
   return (
     <ModalDeleteStiled>
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        Deseja realmente apagar o usuario {nome}?
+        Deseja realmente apagar o(a) {nome}?
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
         Esta decisão não tem volta!
