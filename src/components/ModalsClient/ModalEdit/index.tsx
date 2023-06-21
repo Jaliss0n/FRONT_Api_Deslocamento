@@ -8,7 +8,7 @@ import { AutoCompleteWhiteStyles } from "../../autoCompleteWhite";
 import { estados } from "@/data";
 import styled from "@emotion/styled";
 
-const ModalEditiStyled = styled.form`
+export const ModalEditiStyled = styled.form`
   position: absolute;
   top: 50%;
   left: 50%;

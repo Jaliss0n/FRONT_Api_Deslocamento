@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Alert, AlertTitle, Snackbar } from "@mui/material";
+import { Alert, AlertColor, AlertTitle, Snackbar } from "@mui/material";
 
 const SnackbarContainer = styled(Snackbar)`
   position: fixed;
@@ -12,13 +12,15 @@ interface PropsSnack {
   handleSnackbarClose: () => void;
   message: string;
   description?: string;
+  variant: AlertColor;
 }
 
 export function Snackbars({
   openSnackbar,
   handleSnackbarClose,
   message,
-  description
+  description,
+  variant
 }: PropsSnack) {
   return (
     <SnackbarContainer
@@ -26,7 +28,7 @@ export function Snackbars({
       autoHideDuration={3000}
       onClose={handleSnackbarClose}
     >
-      <Alert severity="success">
+      <Alert severity={variant}>
         <AlertTitle>{message}</AlertTitle>
         {description}
       </Alert>

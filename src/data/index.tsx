@@ -1,4 +1,5 @@
 export const typeDoc = ["Rg", "CPF"];
+export const categorias = ["A","B", "AB","C", "D", "E"];
 export const estados = [
   "AC",
   "AL",

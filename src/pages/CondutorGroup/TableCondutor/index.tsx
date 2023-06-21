@@ -1,12 +1,8 @@
-import { CustomBox, TitleCard } from "../Clients";
+import { CustomBox, TitleCard } from "../../ClientsGroup/Clients";
 import { Weather } from "../../Weather";
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-} from "@mui/material";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import axios from "axios";
 import styled from "@emotion/styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -14,72 +10,47 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
 import ModalDelete from "@/components/ModalsClient/ModalDelete";
-import { ModalEdit } from "@/components/ModalsClient/ModalEdit";
+import { ModalEdit } from "../../../components/ModalsCondutor/ModalEdit";
 import { Snackbars } from "@/components/Snackbars";
-import { ModalView } from "@/components/ModalsClient/ModalView";
+import { ModalView } from "../../../components/ModalsCondutor/ModalView";
 import { apiUrl } from "@/data/api";
+import {
+  DataGridWhite,
+  TableContainer,
+} from "@/pages/ClientsGroup/TableClients";
 
-export const TableContainer = styled(Box)`
-  position: relative;
-  width: 70%;
-  background-color: #384ce3;
-  border-radius: 12px;
-  padding: 3%;
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    height: 100vh;
-    border-radius: 0px;
-  }
-`;
-
-
-export const DataGridWhite = styled(DataGrid)({
-  "& .MuiTablePagination-selectLabel.css-pdct74-MuiTablePagination-selectLabel, .MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-194a1fa-MuiSelect-select-MuiInputBase-input, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiSelect-icon.MuiTablePagination-selectIcon.MuiSelect-iconStandard.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon, .MuiTablePagination-displayedRows.css-levciy-MuiTablePagination-displayedRows, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root":
-    {
-      color: "white",
-    },
-});
-
-interface TableClients {
+interface TableCondutor {
   id: number;
   nome: string;
-  cidade: string;
+  catergoriaHabilitacao: string;
 }
 
-interface PropsEdit {
+interface PropsView {
+  id: number;
+  catergoriaHabilitacao: string;
   nome: string;
-  logradouro: string;
-  numero: string;
-  bairro: string;
-  cidade: string;
-  uf: string;
+  numeroHabilitacao: string;
+  vencimentoHabilitacao: string;
 }
 
-interface PropsView extends PropsEdit {
-  numeroDocumento: string;
-  tipoDocumento: string;
-}
-
-export function TableClients() {
+export function TableCondutor() {
   const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
   const [openSnackbarEdit, setOpenSnackbarEdit] = React.useState(false);
-  const [dataTable, setDataTable] = React.useState<TableClients[]>([
+  const [openSnackbarEditErro, setOpenSnackbarEditErro] = React.useState(false);
+  const [dataTable, setDataTable] = React.useState<TableCondutor[]>([
     {
       id: 0,
       nome: "Carregando",
-      cidade: "Carregando",
+      catergoriaHabilitacao: "Carregando",
     },
   ]);
 
   async function getClientsData() {
     try {
-      await axios
-        .get(`${apiUrl}/Cliente`)
-        .then((data) => {
-          const response = data.data;
-          setDataTable(response);
-        });
+      await axios.get(`${apiUrl}/Condutor`).then((data) => {
+        const response = data.data;
+        setDataTable(response);
+      });
     } catch (error) {}
   }
 
@@ -105,8 +76,8 @@ export function TableClients() {
       sortable: false,
     },
     {
-      field: "cidade",
-      headerName: "Cidade",
+      field: "catergoriaHabilitacao",
+      headerName: "Categoria da Habilitação",
       width: 150,
       flex: 1,
       disableColumnMenu: true,
@@ -132,22 +103,17 @@ export function TableClients() {
         const handleOpenView = () => setOpenView(true);
         const handleCloseView = () => setOpenView(false);
         const [responseView, setResponseView] = React.useState<PropsView>({
-          tipoDocumento: 'Carregando...',
-          numeroDocumento: 'Carregando...',
+          id: 0,
           nome: "Carregando...",
-          logradouro: "Carregando...",
-          numero: "Carregando...",
-          bairro: "Carregando...",
-          cidade: "Carregando...",
-          uf: "Carregando...",
+          numeroHabilitacao: "Carregando...",
+          catergoriaHabilitacao: "Carregando...",
+          vencimentoHabilitacao: "Carregando...",
         });
 
         const handleVisualizar = async () => {
           try {
             await axios
-              .get(
-                `${apiUrl}/Cliente/${data.row.id}`
-              )
+              .get(`${apiUrl}/Condutor/${data.row.id}`)
               .then((data) => {
                 setResponseView(data.data);
                 handleOpenView();
@@ -155,39 +121,34 @@ export function TableClients() {
           } catch (error) {}
         };
 
-        const handleEditar = async (response: PropsEdit) => {
+        const handleEditar = async (response: any, dataPic: string) => {
+          const newCategory = [data.row.catergoriaHabilitacao];
+          newCategory.push(response.catergoriaHabilitacao);
+          const jsonString = JSON.stringify(newCategory);
           try {
             await axios
-              .put(
-                `${apiUrl}/Cliente/${data.row.id}`,
-                {
-                  id: data.row.id,
-                  nome: response.nome,
-                  logradouro: response.logradouro,
-                  numero: response.numero,
-                  bairro: response.bairro,
-                  cidade: response.cidade,
-                  uf: response.uf,
-                }
-              )
+              .put(`${apiUrl}/Condutor/${data.row.id}`, {
+                id: data.row.id,
+                categoriaHabilitacao: jsonString,
+                vencimentoHabilitacao: dataPic,
+              })
               .then(() => {
                 handleShowSnackbarEdit();
                 handleCloseEdit();
                 getClientsData();
-              })
-              .catch((erro) => console.log(erro));
-          } catch (error) {}
+              });
+          } catch (error) {
+            console.log(error);
+            handleShowSnackbarEditErro();
+          }
         };
 
         const handleApagar = async () => {
           try {
             await axios
-              .delete(
-                `${apiUrl}/Cliente/${data.row.id}`,
-                {
-                  data: { id: data.row.id },
-                }
-              )
+              .delete(`${apiUrl}/Condutor/${data.row.id}`, {
+                data: { id: data.row.id },
+              })
               .then(() => {
                 handleShowSnackbarDelete();
                 getClientsData();
@@ -231,16 +192,11 @@ export function TableClients() {
               aria-describedby="modal-modal-description"
             >
               <ModalView
-                tipoDocumento={responseView.tipoDocumento}
-                numeroDocumento={responseView.numeroDocumento}
                 nome={responseView.nome}
-                logradouro={responseView.logradouro}
-                numero={responseView.numero}
-                bairro={responseView.bairro}
-                cidade={responseView.cidade}
-                uf={responseView.uf}
+                vencimentoHabilitacao={responseView.vencimentoHabilitacao}
+                numeroHabilitacao={responseView.numeroHabilitacao}
+                catergoriaHabilitacao={responseView.catergoriaHabilitacao}
                 handleClose={handleCloseView}
-
               />
             </Modal>
 
@@ -251,12 +207,8 @@ export function TableClients() {
               aria-describedby="modal-modal-description"
             >
               <ModalEdit
-                nome={data.row.nome}
-                logradouro={data.row.logradouro}
-                numero={data.row.numero}
-                bairro={data.row.bairro}
-                cidade={data.row.cidade}
-                uf={data.row.uf}
+                catergoriaHabilitacao={data.row.catergoriaHabilitacao}
+                vencimentoHabilitacao={data.row.vencimentoHabilitacao}
                 handleEditar={handleEditar}
               />
             </Modal>
@@ -283,16 +235,23 @@ export function TableClients() {
   const handleShowSnackbarDelete = () => setOpenSnackbarDelete(true);
   const handleSnackbarCloseEdit = () => setOpenSnackbarEdit(false);
   const handleShowSnackbarEdit = () => setOpenSnackbarEdit(true);
+  const handleSnackbarCloseEditErro = () => setOpenSnackbarEditErro(false);
+  const handleShowSnackbarEditErro = () => setOpenSnackbarEditErro(true);
+
+  const dataFormatedTable = dataTable.map((data) => {
+    data.catergoriaHabilitacao = data.catergoriaHabilitacao.replace(/[\[\]"\s\\]/g, "");
+    return data;
+});
 
   return (
     <CustomBox>
       <TableContainer>
-        <TitleCard>Tabela Clientes</TitleCard>
+        <TitleCard>Tabela Condutor</TitleCard>
         <DataGridWhite
-          rows={dataTable}
+          rows={dataFormatedTable}
           columns={columns}
           autoHeight
-          sx={{ color: "white", border: 'none', }}
+          sx={{ color: "white", border: "none" }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -309,14 +268,20 @@ export function TableClients() {
       <Snackbars
         openSnackbar={openSnackbarDelete}
         handleSnackbarClose={handleSnackbarCloseDelete}
-        message="Cliente Apagado com sucesso!"
+        message="Condutor Apagado com sucesso!"
         variant="success"
       />
       <Snackbars
         openSnackbar={openSnackbarEdit}
         handleSnackbarClose={handleSnackbarCloseEdit}
-        message="Cliente Atualizado com sucesso!"
+        message="Condutor Atualizado com sucesso!"
         variant="success"
+      />
+      <Snackbars
+        openSnackbar={openSnackbarEditErro}
+        handleSnackbarClose={handleSnackbarCloseEditErro}
+        message="A Data de validade não pode ser menor que a atual!"
+        variant="warning"
       />
       <Weather />
     </CustomBox>

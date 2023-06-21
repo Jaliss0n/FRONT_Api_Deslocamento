@@ -22,11 +22,14 @@ export const CustomBox = styled(Box)`
   background-size: cover;
 
   @media screen and (max-width: 900px) {
+    align-items: normal;
+    background-image: none;
+    background-color: #384ce3;
     width: 100%;
   }
 `;
 
-const CustomFormCard = styled.form`
+export const CustomFormCard = styled.form`
   display: flex;
   flex-direction: column;
   background-color: #384ce3;
@@ -324,6 +327,7 @@ export default function Clients() {
           handleSnackbarClose={handleSnackbarClose}
           message="Cliente Cadastrado com sucesso!"
           description="Clique no botão visualizar do menu de Clientes para executar ações!"
+          variant="success"
         />
       </CustomFormCard>
       <Weather />
