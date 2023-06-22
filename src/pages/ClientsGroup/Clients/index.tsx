@@ -3,7 +3,10 @@ import { useForm, SubmitHandler, DeepPartial } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
-import { WhiteTextField } from "@/components/WTextField";
+import {
+  WhiteTextField,
+  WhiteTextFieldComponent,
+} from "@/components/WTextField";
 import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
 import axios from "axios";
 import { useState } from "react";
@@ -11,6 +14,7 @@ import { estados, typeDoc } from "@/data";
 import { Weather } from "../../Weather";
 import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
+import ReusableAutoComplete from "@/components/WhiteAutoComplete";
 
 export const CustomBox = styled(Box)`
   display: flex;
@@ -134,181 +138,92 @@ export default function Clients() {
         <Typography color="white">Preencha com os dados do Cliente</Typography>
         <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
         <AreaInputs>
-          <AutoCompleteWhiteStyles
-            disablePortal
-            fullWidth
+          <ReusableAutoComplete
             id="tipoDocumento"
             options={typeDoc}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
-            renderInput={(params) => (
-              <WhiteTextField
-                {...params}
-                {...register("tipoDocumento")}
-                error={!!errors.tipoDocumento}
-                helperText={errors.tipoDocumento?.message?.toString()}
-                label={
-                  <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                    Tipo do Documento
-                  </Typography>
-                }
-              />
-            )}
+            label="Tipo do Documento"
+            error={!!errors.tipoDocumento}
+            helperText={errors.tipoDocumento?.message?.toString()}
+            register={register}
           />
 
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="numeroDocumento"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Numero do documento
-              </Typography>
-            }
-            variant="outlined"
-            {...register("numeroDocumento")}
+            type="text"
+            label="Numero do documento"
+            register={register}
             error={!!errors.numeroDocumento}
+            fullWidth
             helperText={errors.numeroDocumento?.message?.toString()}
-            sx={{
-              margin: "2% 0 2% 2%",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
         </AreaInputs>
         <AreaInputs>
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="nome"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Nome
-              </Typography>
-            }
-            variant="outlined"
-            {...register("nome")}
+            type="text"
+            label="Nome"
+            register={register}
             error={!!errors.nome}
+            fullWidth
             helperText={errors.nome?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
 
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="logradouro"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Logradouro
-              </Typography>
-            }
-            variant="outlined"
-            {...register("logradouro")}
+            type="text"
+            label="Logradouro"
+            register={register}
             error={!!errors.logradouro}
+            fullWidth
             helperText={errors.logradouro?.message?.toString()}
-            sx={{
-              margin: "2% 0 2% 2%",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
         </AreaInputs>
 
         <AreaInputs>
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="numero"
-            fullWidth
             type="number"
-            label={
-              <Typography color="white" variant="body1">
-                Numero
-              </Typography>
-            }
-            variant="outlined"
-            {...register("numero")}
+            label="Numero"
+            register={register}
             error={!!errors.numero}
+            fullWidth
             helperText={errors.numero?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
 
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="bairro"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Bairro
-              </Typography>
-            }
-            variant="outlined"
-            {...register("bairro")}
+            type="text"
+            label="Bairro"
+            register={register}
             error={!!errors.bairro}
+            fullWidth
             helperText={errors.bairro?.message?.toString()}
-            sx={{
-              margin: "2% 0 2% 2%",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
         </AreaInputs>
 
         <AreaInputs>
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="cidade"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Cidade
-              </Typography>
-            }
-            variant="outlined"
-            {...register("cidade")}
+            type="text"
+            label="Cidade"
+            register={register}
             error={!!errors.cidade}
+            fullWidth
             helperText={errors.cidade?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
 
-          <AutoCompleteWhiteStyles
-            disablePortal
+          
+
+          <ReusableAutoComplete
             id="uf"
             options={estados}
-            sx={{
-              margin: "2% 0 2% 2%",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
-            renderInput={(params) => (
-              <WhiteTextField
-                {...params}
-                {...register("uf")}
-                error={!!errors.uf}
-                helperText={errors.uf?.message?.toString()}
-                label={
-                  <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                    UF
-                  </Typography>
-                }
-              />
-            )}
+            label="UF"
+            error={!!errors.uf}
+            helperText={errors.uf?.message?.toString()}
+            register={register}
+            sx={{width:'15%', "@media (max-width: 900px)": {
+              width: '100%'
+            }}}
           />
         </AreaInputs>
 

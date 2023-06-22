@@ -3,8 +3,7 @@ import { useForm, SubmitHandler, DeepPartial } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
-import { WhiteDatePicker, WhiteTextField } from "@/components/WTextField";
-import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
+import { WhiteTextFieldComponent } from "@/components/WTextField";
 import axios from "axios";
 import { useState } from "react";
 import { categorias } from "@/data";
@@ -16,10 +15,10 @@ import {
   CustomFormCard,
   TitleCard,
 } from "@/pages/ClientsGroup/Clients";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
+import ReusableAutoComplete from "@/components/WhiteAutoComplete";
+import { WhiteDatePickerCompont } from "@/components/WhiteDatePicker";
 
 export const AreaInputsVertical = styled(Box)`
   display: flex;
@@ -87,100 +86,40 @@ export default function Condutor() {
         <Typography color="white">Preencha com os dados do Condutor</Typography>
         <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
         <AreaInputsVertical>
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="nome"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Nome
-              </Typography>
-            }
-            variant="outlined"
-            {...register("nome")}
+            type="text"
+            label="Nome"
+            register={register}
             error={!!errors.nome}
+            fullWidth
             helperText={errors.nome?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
 
-          <AutoCompleteWhiteStyles
-            disablePortal
+          <ReusableAutoComplete
             id="categoriaHabilitacao"
             options={categorias}
-            fullWidth
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
-            renderInput={(params) => (
-              <WhiteTextField
-                {...params}
-                {...register("categoriaHabilitacao")}
-                error={!!errors.categoriaHabilitacao}
-                helperText={errors.categoriaHabilitacao?.message?.toString()}
-                label={
-                  <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                    Categoria da Habilitação
-                  </Typography>
-                }
-              />
-            )}
+            label="Categoria da Habilitação"
+            error={!!errors.categoriaHabilitacao}
+            helperText={errors.categoriaHabilitacao?.message?.toString()}
+            register={register}
           />
 
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="numeroHabilitação"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Numero da Habilitação
-              </Typography>
-            }
-            variant="outlined"
-            {...register("numeroHabilitação")}
+            type="text"
+            label="Numero da Habilitação"
+            register={register}
             error={!!errors.numeroHabilitação}
+            fullWidth
             helperText={errors.numeroHabilitação?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
 
-          <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            adapterLocale="pt-br"
-          >
-            <WhiteDatePicker
-              label={
-                <Typography color="white" variant="body1">
-                  Vencimento da Habilitação
-                </Typography>
-              }
-              slotProps={{
-                textField: {
-                  helperText: errors.vencimentoHabilitacao?.message?.toString(),
-                  placeholder: "Dia/Mes/Ano",
-                },
-              }}
-              sx={{
-                color: "white",
-                width: "100%",
-                margin: "2% 2% 2% 0",
-                "@media (max-width: 900px)": {
-                  margin: "2% 0",
-                },
-              }}
-              disablePast={true}
-              onChange={(newValue: any) => setDataPic(newValue["$d"])}
-            />
-          </LocalizationProvider>
+          <WhiteDatePickerCompont
+            label="Vencimento da Habilitação"
+            helperText={errors.vencimentoHabilitacao?.message?.toString()}
+            setData={setDataPic}
+          />
         </AreaInputsVertical>
 
         <Button

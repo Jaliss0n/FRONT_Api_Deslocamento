@@ -2,7 +2,10 @@ import { Button, Divider, Typography } from "@mui/material";
 import { useForm, SubmitHandler, DeepPartial } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { WhiteTextField } from "@/components/WTextField";
+import {
+  WhiteTextField,
+  WhiteTextFieldComponent,
+} from "@/components/WTextField";
 import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
 import axios from "axios";
 import { useState } from "react";
@@ -16,6 +19,7 @@ import {
   CustomFormCard,
   TitleCard,
 } from "@/pages/ClientsGroup/Clients";
+import ReusableAutoComplete from "@/components/WhiteAutoComplete";
 
 export const createVeiculoSchema = z.object({
   placa: z
@@ -78,98 +82,42 @@ export default function Veiculos() {
         <Typography color="white">Preencha com os dados do Veiculo</Typography>
         <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
         <AreaInputsVertical>
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="placa"
-            fullWidth
-            label={
-              <Typography color="white" variant="body1">
-                Placa do Veiculo
-              </Typography>
-            }
-            variant="outlined"
-            {...register("placa")}
+            type="text"
+            label="Placa do Veiculo"
+            register={register}
             error={!!errors.placa}
+            fullWidth
             helperText={errors.placa?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
 
-          <AutoCompleteWhiteStyles
-            disablePortal
+          <ReusableAutoComplete
             id="marcaModelo"
             options={marcasDeCarros}
-            fullWidth
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
-            renderInput={(params) => (
-              <WhiteTextField
-                {...params}
-                {...register("marcaModelo")}
-                error={!!errors.marcaModelo}
-                helperText={errors.marcaModelo?.message?.toString()}
-                label={
-                  <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                    Marca e Modelo do Veiculo
-                  </Typography>
-                }
-              />
-            )}
+            label="Marca e Modelo do Veiculo"
+            error={!!errors.marcaModelo}
+            helperText={errors.marcaModelo?.message?.toString()}
+            register={register}
           />
 
-          <AutoCompleteWhiteStyles
-            disablePortal
+          <ReusableAutoComplete
             id="anoFabricacao"
-            itemType="number"
             options={anos}
-            fullWidth
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
-            renderInput={(params) => (
-              <WhiteTextField
-                {...params}
-                {...register("anoFabricacao")}
-                error={!!errors.anoFabricacao}
-                helperText={errors.anoFabricacao?.message?.toString()}
-                label={
-                  <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                    Ano de Fabricação
-                  </Typography>
-                }
-              />
-            )}
+            label="Ano de Fabricação"
+            error={!!errors.anoFabricacao}
+            helperText={errors.anoFabricacao?.message?.toString()}
+            register={register}
           />
 
-          <WhiteTextField
+          <WhiteTextFieldComponent
             id="kmAtual"
-            fullWidth
             type="number"
-            label={
-              <Typography color="white" variant="body1">
-                Kilometragem Atual
-              </Typography>
-            }
-            variant="outlined"
-            {...register("kmAtual")}
+            label="Kilometragem Atual"
+            register={register}
             error={!!errors.kmAtual}
+            fullWidth
             helperText={errors.kmAtual?.message?.toString()}
-            sx={{
-              margin: "2% 2% 2% 0",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
           />
         </AreaInputsVertical>
 

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { WhiteDatePicker, WhiteTextField } from "../../WTextField";
+import {  WhiteTextField } from "../../WTextField";
 import {  Divider, Typography } from "@mui/material";
 import { AutoCompleteWhiteStyles } from "../../autoCompleteWhite";
 import { categorias } from "@/data";
@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { AreaInputsVertical } from "@/pages/CondutorGroup/Condutor";
 import { ButtonSubmit, ModalEditiStyled } from "@/components/ModalsClient/ModalEdit";
+import { WhiteDatePicker } from "@/components/WhiteDatePicker";
 
 dayjs.locale("pt-br");
 

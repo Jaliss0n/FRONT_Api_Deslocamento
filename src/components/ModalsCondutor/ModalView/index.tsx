@@ -1,5 +1,5 @@
 import { AreaInputs } from "@/pages/ClientsGroup/Clients";
-import { WhiteDatePicker, WhiteTextField } from "../../WTextField";
+import { WhiteTextField } from "../../WTextField";
 import { Box, Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { ButtonSubmit } from "../../ModalsClient/ModalEdit";
@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { ModalViewStyled } from "@/components/ModalsClient/ModalView";
+import { WhiteDatePicker, WhiteDatePickerCompont } from "@/components/WhiteDatePicker";
 
 dayjs.locale("pt-br");
 
