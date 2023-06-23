@@ -1,12 +1,8 @@
 import { CustomBox, TitleCard } from "../Clients";
-import { Weather } from "../../Weather";
+import Weather from "../../Weather";
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-} from "@mui/material";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import axios from "axios";
 import styled from "@emotion/styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -32,7 +28,6 @@ export const TableContainer = styled(Box)`
     border-radius: 0px;
   }
 `;
-
 
 export const DataGridWhite = styled(DataGrid)({
   "& .MuiTablePagination-selectLabel.css-pdct74-MuiTablePagination-selectLabel, .MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-194a1fa-MuiSelect-select-MuiInputBase-input, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiSelect-icon.MuiTablePagination-selectIcon.MuiSelect-iconStandard.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon, .MuiTablePagination-displayedRows.css-levciy-MuiTablePagination-displayedRows, .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root":
@@ -61,7 +56,7 @@ interface PropsView extends PropsEdit {
   tipoDocumento: string;
 }
 
-export function TableClients() {
+export default function TableClients() {
   const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
   const [openSnackbarEdit, setOpenSnackbarEdit] = React.useState(false);
   const [dataTable, setDataTable] = React.useState<TableClients[]>([
@@ -74,12 +69,10 @@ export function TableClients() {
 
   async function getClientsData() {
     try {
-      await axios
-        .get(`${apiUrl}/Cliente`)
-        .then((data) => {
-          const response = data.data;
-          setDataTable(response);
-        });
+      await axios.get(`${apiUrl}/Cliente`).then((data) => {
+        const response = data.data;
+        setDataTable(response);
+      });
     } catch (error) {}
   }
 
@@ -132,8 +125,8 @@ export function TableClients() {
         const handleOpenView = () => setOpenView(true);
         const handleCloseView = () => setOpenView(false);
         const [responseView, setResponseView] = React.useState<PropsView>({
-          tipoDocumento: 'Carregando...',
-          numeroDocumento: 'Carregando...',
+          tipoDocumento: "Carregando...",
+          numeroDocumento: "Carregando...",
           nome: "Carregando...",
           logradouro: "Carregando...",
           numero: "Carregando...",
@@ -144,32 +137,25 @@ export function TableClients() {
 
         const handleVisualizar = async () => {
           try {
-            await axios
-              .get(
-                `${apiUrl}/Cliente/${data.row.id}`
-              )
-              .then((data) => {
-                setResponseView(data.data);
-                handleOpenView();
-              });
+            await axios.get(`${apiUrl}/Cliente/${data.row.id}`).then((data) => {
+              setResponseView(data.data);
+              handleOpenView();
+            });
           } catch (error) {}
         };
 
         const handleEditar = async (response: PropsEdit) => {
           try {
             await axios
-              .put(
-                `${apiUrl}/Cliente/${data.row.id}`,
-                {
-                  id: data.row.id,
-                  nome: response.nome,
-                  logradouro: response.logradouro,
-                  numero: response.numero,
-                  bairro: response.bairro,
-                  cidade: response.cidade,
-                  uf: response.uf,
-                }
-              )
+              .put(`${apiUrl}/Cliente/${data.row.id}`, {
+                id: data.row.id,
+                nome: response.nome,
+                logradouro: response.logradouro,
+                numero: response.numero,
+                bairro: response.bairro,
+                cidade: response.cidade,
+                uf: response.uf,
+              })
               .then(() => {
                 handleShowSnackbarEdit();
                 handleCloseEdit();
@@ -182,12 +168,9 @@ export function TableClients() {
         const handleApagar = async () => {
           try {
             await axios
-              .delete(
-                `${apiUrl}/Cliente/${data.row.id}`,
-                {
-                  data: { id: data.row.id },
-                }
-              )
+              .delete(`${apiUrl}/Cliente/${data.row.id}`, {
+                data: { id: data.row.id },
+              })
               .then(() => {
                 handleShowSnackbarDelete();
                 getClientsData();
@@ -240,7 +223,6 @@ export function TableClients() {
                 cidade={responseView.cidade}
                 uf={responseView.uf}
                 handleClose={handleCloseView}
-
               />
             </Modal>
 
@@ -292,7 +274,7 @@ export function TableClients() {
           rows={dataTable}
           columns={columns}
           autoHeight
-          sx={{ color: "white", border: 'none', }}
+          sx={{ color: "white", border: "none" }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -321,7 +303,6 @@ export function TableClients() {
         variant="success"
         visualizar={false}
         page={0}
-
       />
       <Weather />
     </CustomBox>

@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { WhiteTextField } from "../../WTextField";
+import { WhiteTextFieldComponent } from "../../WTextField";
 import { Divider, Typography } from "@mui/material";
-import { AutoCompleteWhiteStyles } from "../../autoCompleteWhite";
 import { AreaInputsVertical } from "@/pages/CondutorGroup/Condutor";
 import {
   ButtonSubmit,
@@ -11,7 +10,7 @@ import {
 } from "@/components/ModalsClient/ModalEdit";
 import { marcasDeCarros } from "@/data";
 import { anos } from "@/data";
-
+import ReusableAutoComplete from "@/components/WhiteAutoComplete";
 
 interface PropsEdit {
   marcaModelo: string;
@@ -45,9 +44,8 @@ export function ModalEdit({
   });
 
   async function onSubmit(data: any) {
-    //tipar
     handleEditar(data);
-  } 
+  }
 
   return (
     <ModalEditiStyled onSubmit={handleSubmit(onSubmit)}>
@@ -55,74 +53,35 @@ export function ModalEdit({
       <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
 
       <AreaInputsVertical>
-        <AutoCompleteWhiteStyles
-          disablePortal
-          fullWidth
+        <ReusableAutoComplete
           id="marcaModelo"
-          defaultValue={marcaModelo}
           options={marcasDeCarros}
-          sx={{
-            margin: "2% 0",
-          }}
-          renderInput={(params) => (
-            <WhiteTextField
-              {...params}
-              {...register("marcaModelo")}
-              error={!!errors.marcaModelo}
-              helperText={errors.marcaModelo?.message?.toString()}
-              label={
-                <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                  Marca e Modelo
-                </Typography>
-              }
-            />
-          )}
+          label="Marca e Modelo"
+          error={!!errors.marcaModelo}
+          helperText={errors.marcaModelo?.message?.toString()}
+          register={register}
+          defaultValue={marcaModelo}
         />
-
-        <AutoCompleteWhiteStyles
-          disablePortal
-          fullWidth
+        
+        <ReusableAutoComplete
           id="anoFabricacao"
           options={anos}
-          defaultValue={anoFabricacao}
-          sx={{
-            margin: "2% 0",
-          }}
-          renderInput={(params) => (
-            <WhiteTextField
-              {...params}
-              {...register("anoFabricacao")}
-              error={!!errors.anoFabricacao}
-              helperText={errors.anoFabricacao?.message?.toString()}
-              label={
-                <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                  Ano de Fabricação
-                </Typography>
-              }
-            />
-          )}
+          label="Ano de Fabricação"
+          error={!!errors.anoFabricacao}
+          helperText={errors.anoFabricacao?.message?.toString()}
+          register={register}
+          defaultValue={anoFabricacao.toString()}
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="kmAtual"
           type="number"
-          fullWidth
-          label={
-            <Typography color="white" variant="body1">
-              Kilometragem Atual
-            </Typography>
-          }
-          defaultValue={kmAtual}
-          variant="outlined"
-          {...register("kmAtual")}
+          label="Kilometragem Atual"
+          defaultValue={kmAtual.toString()}
+          register={register}
           error={!!errors.kmAtual}
+          fullWidth
           helperText={errors.kmAtual?.message?.toString()}
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
         />
       </AreaInputsVertical>
 

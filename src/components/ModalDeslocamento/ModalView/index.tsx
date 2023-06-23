@@ -1,9 +1,8 @@
 import { AreaInputs } from "@/pages/ClientsGroup/Clients";
-import { WhiteTextField } from "../../WTextField";
+import { WhiteTextFieldComponent } from "../../WTextField";
 import { Box, Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { ButtonSubmit } from "../../ModalsClient/ModalEdit";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "@/data/api";
@@ -114,7 +113,6 @@ export function ModalView({
           .map((e: Cliente) => e.nome)
           .join("")
       );
-      console.log(objCondutor);
 
       const responseVeiculo = await axios.get(`${apiUrl}/Veiculo`);
       const dataVeiculo = responseVeiculo.data;
@@ -141,204 +139,111 @@ export function ModalView({
     (fimDeslocamento = "Ainda em andamento"), (kmFinal = "Ainda em andamento");
   }
 
-
   return (
     <ModalViewStyled>
       <Typography>Visualizar Deslocamentos</Typography>
       <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="kmInicial"
-          fullWidth
+          type="text"
+          label="Kilometro Inicial"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Kilometro Inicial
-            </Typography>
-          }
-          defaultValue={kmInicial}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          defaultValue={kmInicial.toString()}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="kmFinal"
-          fullWidth
+          type="text"
+          label="Kilometro Final"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Kilometro Final
-            </Typography>
-          }
           defaultValue={kmFinal}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="inicioDeslocamento"
-          fullWidth
+          type="text"
+          label="Inicio do Deslocamento"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Inicio do Deslocamento
-            </Typography>
-          }
-          defaultValue={dayjs(inicioDeslocamento).format("DD/MM/YYYY HH:mm")}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          defaultValue={inicioDeslocamento}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="fimDeslocamento"
-          fullWidth
+          type="text"
+          label="Fim do Deslocamento"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Fim do Deslocamento
-            </Typography>
-          }
-          defaultValue={dayjs(fimDeslocamento).format("DD/MM/YYYY HH:mm")}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          defaultValue={fimDeslocamento}
+          fullWidth
         />
       </AreaInputs>
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="checkList"
-          fullWidth
+          type="text"
+          label="CheckList"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              CheckList
-            </Typography>
-          }
           defaultValue={checkList}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="motivo"
-          fullWidth
+          type="text"
+          label="Motivo"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Motivo
-            </Typography>
-          }
           defaultValue={motivo}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="observacao"
-          fullWidth
+          type="text"
+          label="Observação"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Observacao
-            </Typography>
-          }
           defaultValue={observacao}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
 
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="idCliente"
-          fullWidth
-          inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Cliente
-            </Typography>
-          }
+          type="text"
+          label="Cliente"
           value={objClient}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
-        />
-        <WhiteTextField
-          id="idCondutor"
-          fullWidth
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Condutor
-            </Typography>
-          }
-          value={objCondutor}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
-          id="idVeiculo"
-          fullWidth
+        <WhiteTextFieldComponent
+          id="idCondutor"
+          type="text"
+          label="Condutor"
+          value={objCondutor}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Veiculo
-            </Typography>
-          }
+          fullWidth
+        />
+
+        <WhiteTextFieldComponent
+          id="idVeiculo"
+          type="text"
+          label="Veiculo"
           value={objVeiculo}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          inputProps={{ readOnly: true }}
+          fullWidth
         />
       </AreaInputs>
 

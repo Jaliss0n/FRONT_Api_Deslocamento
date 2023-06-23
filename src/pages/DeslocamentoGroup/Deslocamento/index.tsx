@@ -6,10 +6,9 @@ import {
   WhiteTextField,
   WhiteTextFieldComponent,
 } from "@/components/WTextField";
-import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Weather } from "../../Weather";
+import  Weather from "../../Weather";
 import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
 import "dayjs/locale/pt-br";
@@ -21,7 +20,7 @@ import {
   TitleCard,
 } from "@/pages/ClientsGroup/Clients";
 import { WhiteDatePickerCompont } from "@/components/WhiteDatePicker";
-import ReusableAutoComplete from "@/components/WhiteAutoComplete";
+import { AutoCompleteWhiteStyles } from "@/components/WhiteAutoComplete";
 
 dayjs.locale("pt-br");
 
@@ -222,7 +221,7 @@ export default function Deslocamento() {
             fullWidth
             onChange={(_, value) => handleOptionChange(value, setClientId)}
             options={objClient}
-            getOptionLabel={(option: any) => option.nome} //tipar
+            getOptionLabel={(option: any) => option.nome} 
             sx={{
               margin: "2% 0",
               "@media (max-width: 900px)": {
@@ -249,7 +248,7 @@ export default function Deslocamento() {
             fullWidth
             id="idCondutor"
             options={objCondutor}
-            getOptionLabel={(option: any) => option.nome} //tipar
+            getOptionLabel={(option: any) => option.nome} 
             onChange={(_, value) => handleOptionChange(value, setCondutorId)}
             sx={{
               margin: "2% 0 2% 2%",

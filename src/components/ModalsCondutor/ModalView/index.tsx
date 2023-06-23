@@ -1,17 +1,22 @@
 import { AreaInputs } from "@/pages/ClientsGroup/Clients";
-import { WhiteTextField } from "../../WTextField";
-import { Box, Divider, Typography } from "@mui/material";
+import { WhiteTextFieldComponent } from "../../WTextField";
+import { Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { ButtonSubmit } from "../../ModalsClient/ModalEdit";
 import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { ModalViewStyled } from "@/components/ModalsClient/ModalView";
-import { WhiteDatePicker, WhiteDatePickerCompont } from "@/components/WhiteDatePicker";
+import {
+  WhiteDatePickerCompont,
+} from "@/components/WhiteDatePicker";
 
 dayjs.locale("pt-br");
 
+export const AutoModalViewStyled = styled(ModalViewStyled)`
+  @media screen and (max-width: 900px) {
+    height: auto;
+  }
+`;
 
 interface PropsView {
   nome: string;
@@ -30,95 +35,49 @@ export function ModalView({
   handleClose,
 }: PropsView) {
   return (
-    <ModalViewStyled>
+    <AutoModalViewStyled>
       <Typography>Visualizar Condutor</Typography>
       <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="nome"
-          fullWidth
+          type="text"
+          label="Nome"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Nome
-            </Typography>
-          }
           defaultValue={nome}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
-          id="categoriaHabilitacao"
-          fullWidth
+        <WhiteTextFieldComponent
+          id="catergoriaHabilitacao"
+          type="text"
+          label="Categoria da Hablitação"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Categoria da Hablitação
-            </Typography>
-          }
           defaultValue={catergoriaHabilitacao.replace(/[\[\]"\s\\]/g, "")}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="numeroHabilitacao"
-          fullWidth
+          type="text"
+          label="Numero da Habilitação"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Numero da Habilitação
-            </Typography>
-          }
           defaultValue={numeroHabilitacao}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-          <WhiteDatePicker
-            label={
-              <Typography color="white" variant="body1">
-                {dayjs(vencimentoHabilitacao).format("DD/MM/YYYY")}
-              </Typography>
-            }
-            slotProps={{
-              textField: {
-                placeholder: "Dia/Mes/Ano",
-              },
-            }}
-            sx={{
-              color: "white",
-              margin: "2% 0% 2% 2% ",
-              width: "100%",
-              "@media (max-width: 900px)": {
-                margin: "2% 0",
-              },
-            }}
-          />
-        </LocalizationProvider>
+        <WhiteDatePickerCompont
+          label={dayjs(vencimentoHabilitacao).format("DD/MM/YYYY")}
+        />
       </AreaInputs>
 
       <ButtonSubmit onClick={() => handleClose()} fullWidth>
         Fechar
       </ButtonSubmit>
-    </ModalViewStyled>
+    </AutoModalViewStyled>
   );
 }

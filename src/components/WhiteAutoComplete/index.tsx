@@ -1,12 +1,13 @@
 import React from "react";
-import { AutoCompleteWhiteStyles } from "../autoCompleteWhite";
 import WhiteTextField from "../WTextField";
-import { Typography } from "@mui/material";
+import { Autocomplete, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
 interface ReusableAutoCompleteProps<T> {
   id: string;
   options: T[];
   register: any;
+  defaultValue?: string;
   getOptionLabel?: (option: unknown) => string;
   error?: boolean;
   helperText?: string;
@@ -14,10 +15,38 @@ interface ReusableAutoCompleteProps<T> {
   sx?: object;
 }
 
+export const AutoCompleteWhiteStyles = styled(Autocomplete)({
+  "& label.Mui-focused": {
+    color: "white",
+  },
+  ".css-i4bv87-MuiSvgIcon-root": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-input": {
+    color: "white",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#d3d3d3",
+      color: "white",
+    },
+    "&:hover fieldset": {
+      borderColor: "#00cfc8;",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
+    },
+  },
+});
+
 const ReusableAutoComplete = <T,>({
   id,
   options,
   getOptionLabel,
+  defaultValue,
   register,
   error,
   helperText,
@@ -29,6 +58,7 @@ const ReusableAutoComplete = <T,>({
       disablePortal
       id={id}
       fullWidth
+      defaultValue={defaultValue}
       options={options}
       getOptionLabel={getOptionLabel}
       renderInput={(params) => (

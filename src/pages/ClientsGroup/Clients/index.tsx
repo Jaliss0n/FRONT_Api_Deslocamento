@@ -4,14 +4,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
 import {
-  WhiteTextField,
   WhiteTextFieldComponent,
 } from "@/components/WTextField";
-import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
 import axios from "axios";
 import { useState } from "react";
 import { estados, typeDoc } from "@/data";
-import { Weather } from "../../Weather";
+import Weather from "../../Weather";
 import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
 import ReusableAutoComplete from "@/components/WhiteAutoComplete";
@@ -29,6 +27,7 @@ export const CustomBox = styled(Box)`
     align-items: normal;
     background-image: none;
     background-color: #384ce3;
+    height: auto;
     width: 100%;
   }
 `;
@@ -75,7 +74,7 @@ export const TitleCard = styled(Typography)`
 export const AreaInputs = styled(Box)`
   display: flex;
   align-items: center;
-  
+
   @media screen and (max-width: 900px) {
     flex-direction: column;
   }
@@ -213,8 +212,6 @@ export default function Clients() {
             helperText={errors.cidade?.message?.toString()}
           />
 
-          
-
           <ReusableAutoComplete
             id="uf"
             options={estados}
@@ -222,9 +219,12 @@ export default function Clients() {
             error={!!errors.uf}
             helperText={errors.uf?.message?.toString()}
             register={register}
-            sx={{width:'15%', "@media (max-width: 900px)": {
-              width: '100%'
-            }}}
+            sx={{
+              width: "15%",
+              "@media (max-width: 900px)": {
+                width: "100%",
+              },
+            }}
           />
         </AreaInputs>
 

@@ -2,15 +2,11 @@ import { Button, Divider, Typography } from "@mui/material";
 import { useForm, SubmitHandler, DeepPartial } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  WhiteTextField,
-  WhiteTextFieldComponent,
-} from "@/components/WTextField";
-import { AutoCompleteWhiteStyles } from "@/components/autoCompleteWhite";
+import { WhiteTextFieldComponent } from "@/components/WTextField";
 import axios from "axios";
 import { useState } from "react";
 import { anos, marcasDeCarros } from "@/data";
-import { Weather } from "../../Weather";
+import Weather from "../../Weather";
 import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
 import { AreaInputsVertical } from "@/pages/CondutorGroup/Condutor";
@@ -20,6 +16,13 @@ import {
   TitleCard,
 } from "@/pages/ClientsGroup/Clients";
 import ReusableAutoComplete from "@/components/WhiteAutoComplete";
+
+interface FormData {
+  placa: string;
+  marcaModelo: string;
+  anoFabricacao: string;
+  kmAtual: string;
+}
 
 export const createVeiculoSchema = z.object({
   placa: z
@@ -32,13 +35,6 @@ export const createVeiculoSchema = z.object({
 
 export default function Veiculos() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  type FormData = {
-    placa: string;
-    marcaModelo: string;
-    anoFabricacao: string;
-    kmAtual: string;
-  };
 
   const {
     handleSubmit,

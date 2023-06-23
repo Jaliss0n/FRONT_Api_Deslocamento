@@ -1,18 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {  WhiteTextField } from "../../WTextField";
 import {  Divider, Typography } from "@mui/material";
-import { AutoCompleteWhiteStyles } from "../../autoCompleteWhite";
 import { categorias } from "@/data";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { AreaInputsVertical } from "@/pages/CondutorGroup/Condutor";
 import { ButtonSubmit, ModalEditiStyled } from "@/components/ModalsClient/ModalEdit";
-import { WhiteDatePicker } from "@/components/WhiteDatePicker";
+import { WhiteDatePickerCompont } from "@/components/WhiteDatePicker";
+import ReusableAutoComplete from "@/components/WhiteAutoComplete";
 
 dayjs.locale("pt-br");
 
@@ -48,7 +45,7 @@ PropsEdit) {
     resolver: zodResolver(createCondutorSchemaUpdate),
   });
 
-  async function onSubmit(data: any) { //tipar
+  async function onSubmit(data: any) {
     handleEditar(data,dataPic);
   }
   
@@ -58,47 +55,21 @@ PropsEdit) {
       <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
 
       <AreaInputsVertical>
-        <AutoCompleteWhiteStyles
-          disablePortal
-          fullWidth
+        <ReusableAutoComplete
           id="catergoriaHabilitacao"
-          defaultValue={catergoriaHabilitacao.replace(/[\[\]"\s\\]/g, '')}
           options={categorias}
-          sx={{
-            margin: "2% 0",
-          }}
-          renderInput={(params) => (
-            <WhiteTextField
-              {...params}
-              {...register("catergoriaHabilitacao")}
-              error={!!errors.catergoriaHabilitacao}
-              helperText={errors.catergoriaHabilitacao?.message?.toString()}
-              label={
-                <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                  Adicionar Categoria de Habilitação
-                </Typography>
-              }
-            />
-          )}
+          label="Adicionar Categoria de Habilitação"
+          error={!!errors.catergoriaHabilitacao}
+          helperText={errors.catergoriaHabilitacao?.message?.toString()}
+          register={register}
+          defaultValue={catergoriaHabilitacao}
         />
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-          <WhiteDatePicker
-            label={
-              <Typography color="white" variant="body1">
-                {dayjs(vencimentoHabilitacao).format('DD/MM/YYYY')}
-              </Typography>
-            }
-            slotProps={{
-              textField: {
-                helperText: errors.vencimentoHabilitacao?.message?.toString(),
-                placeholder: "Dia/Mes/Ano",
-              },
-            }}
-            sx={{ color: "white", margin: "2% 0", }}
-            disablePast={!dayjs().isBefore(vencimentoHabilitacao, 'day')}
-            onChange={(newValue: any) => setDataPic(newValue["$d"])}
-          />
-        </LocalizationProvider>
+        
+        <WhiteDatePickerCompont
+          label={dayjs(vencimentoHabilitacao).format('DD/MM/YYYY')}
+          helperText={errors.vencimentoHabilitacao?.message?.toString()}
+          setData={setDataPic}
+        />
       </AreaInputsVertical>
 
       <ButtonSubmit fullWidth type="submit">

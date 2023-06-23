@@ -1,10 +1,9 @@
 import { CustomBox, TitleCard } from "../../ClientsGroup/Clients";
-import { Weather } from "../../Weather";
+import Weather from "../../Weather";
 import * as React from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
+import { Button, ButtonGroup } from "@mui/material";
 import axios from "axios";
-import styled from "@emotion/styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -33,7 +32,7 @@ interface PropsView {
   vencimentoHabilitacao: string;
 }
 
-export function TableCondutor() {
+export default function TableCondutor() {
   const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
   const [openSnackbarEdit, setOpenSnackbarEdit] = React.useState(false);
   const [openSnackbarEditErro, setOpenSnackbarEditErro] = React.useState(false);
@@ -275,7 +274,6 @@ export function TableCondutor() {
         variant="success"
         visualizar={false}
         page={0}
-
       />
       <Snackbars
         openSnackbar={openSnackbarEdit}
@@ -284,7 +282,6 @@ export function TableCondutor() {
         variant="success"
         visualizar={false}
         page={0}
-
       />
       <Snackbars
         openSnackbar={openSnackbarEditErro}
@@ -293,7 +290,6 @@ export function TableCondutor() {
         variant="warning"
         visualizar={false}
         page={0}
-
       />
       <Weather />
     </CustomBox>

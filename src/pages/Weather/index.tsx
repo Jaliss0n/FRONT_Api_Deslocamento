@@ -18,7 +18,7 @@ interface WeatherDataProp {
   summary: string;
 }
 
-export function Weather() {
+export default function Weather() {
   const [weatherData, setWeatherData] = useState<WeatherDataProp[]>([]);
 
   async function getWeather() {

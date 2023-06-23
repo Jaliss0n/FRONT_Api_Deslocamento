@@ -7,7 +7,7 @@ import { WhiteTextFieldComponent } from "@/components/WTextField";
 import axios from "axios";
 import { useState } from "react";
 import { categorias } from "@/data";
-import { Weather } from "../../Weather";
+import Weather from "../../Weather";
 import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
 import {

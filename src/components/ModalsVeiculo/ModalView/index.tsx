@@ -1,7 +1,6 @@
 import { AreaInputs } from "@/pages/ClientsGroup/Clients";
-import {  WhiteTextField } from "../../WTextField";
-import { Box, Divider, Typography } from "@mui/material";
-import styled from "@emotion/styled";
+import { WhiteTextFieldComponent } from "../../WTextField";
+import { Divider, Typography } from "@mui/material";
 import { ButtonSubmit } from "../../ModalsClient/ModalEdit";
 import { ModalViewStyled } from "@/components/ModalsClient/ModalView";
 
@@ -26,81 +25,45 @@ export function ModalView({
       <Typography>Visualizar Veiculo</Typography>
       <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="placa"
-          fullWidth
+          type="text"
+          label="Placa"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Placa
-            </Typography>
-          }
           defaultValue={placa}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="marcaModelo"
-          fullWidth
+          type="text"
+          label="Marca e Modelo"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Marca e Modelo
-            </Typography>
-          }
           defaultValue={marcaModelo}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="anoFabricacao"
-          fullWidth
+          type="text"
+          label="Ano de Fabricação"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Ano de Fabricação
-            </Typography>
-          }
-          defaultValue={anoFabricacao}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          defaultValue={anoFabricacao.toString()}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="kmAtual"
-          fullWidth
+          type="text"
+          label="Kilometragem Atual"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Kilometragem Atual
-            </Typography>
-          }
-          defaultValue={kmAtual}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          defaultValue={kmAtual.toString()}
+          fullWidth
         />
       </AreaInputs>
 

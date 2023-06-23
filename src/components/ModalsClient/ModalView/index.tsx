@@ -1,5 +1,5 @@
 import { AreaInputs } from "@/pages/ClientsGroup/Clients";
-import { WhiteTextField } from "../../WTextField";
+import { WhiteTextFieldComponent } from "../../WTextField";
 import { Box, Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { ButtonSubmit } from "../ModalEdit";
@@ -16,9 +16,12 @@ export const ModalViewStyled = styled(Box)`
   color: white;
 
   @media screen and (max-width: 900px) {
-    width: 80%;
+    width: 90%;
     padding: 5%;
-    overflow-y: scroll;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
 `;
 
@@ -45,170 +48,95 @@ export function ModalView({
   uf,
   handleClose,
 }: PropsView) {
-  console.log(tipoDocumento);
   return (
     <ModalViewStyled>
       <Typography>Visualizar Cliente</Typography>
       <Divider color="white" sx={{ margin: "2% 0 2% 0" }} />
       <AreaInputs>
-        <WhiteTextField
-          id="numero"
-          fullWidth
+        <WhiteTextFieldComponent
+          id="tipoDocumento"
+          type="text"
+          label="Tipo de documento"
+          register={null}
           inputProps={{ readOnly: true }}
-          type="number"
-          label={
-            <Typography color="white" variant="body1">
-              {tipoDocumento}
-            </Typography>
-          }
           defaultValue={tipoDocumento}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="numeroDocumento"
-          fullWidth
+          type="text"
+          label="Numero do documento"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Numero Documento
-            </Typography>
-          }
           defaultValue={numeroDocumento}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="nome"
-          fullWidth
+          type="text"
+          label="Nome"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Nome
-            </Typography>
-          }
           defaultValue={nome}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="logradouro"
-          fullWidth
+          type="text"
+          label="Logradouro"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Logradouro
-            </Typography>
-          }
           defaultValue={logradouro}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
 
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="numero"
-          fullWidth
+          type="text"
+          label="Numero"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Numero
-            </Typography>
-          }
           defaultValue={numero}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="bairro"
-          fullWidth
+          type="text"
+          label="Bairro"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Bairro
-            </Typography>
-          }
           defaultValue={bairro}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
       </AreaInputs>
 
       <AreaInputs>
-        <WhiteTextField
+        <WhiteTextFieldComponent
           id="cidade"
-          fullWidth
+          type="text"
+          label="Cidade"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              Cidade
-            </Typography>
-          }
           defaultValue={cidade}
-          variant="outlined"
-          sx={{
-            margin: "2% 2% 2% 0",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
 
-        <WhiteTextField
-          id="cidade"
-          fullWidth
+        <WhiteTextFieldComponent
+          id="uf"
+          type="text"
+          label="UF"
+          register={null}
           inputProps={{ readOnly: true }}
-          label={
-            <Typography color="white" variant="body1">
-              UF
-            </Typography>
-          }
           defaultValue={uf}
-          variant="outlined"
-          sx={{
-            margin: "2% 0 2% 2%",
-            "@media (max-width: 900px)": {
-              margin: "2% 0",
-            },
-          }}
+          fullWidth
         />
-       
       </AreaInputs>
       <ButtonSubmit onClick={() => handleClose()} fullWidth>
         Fechar

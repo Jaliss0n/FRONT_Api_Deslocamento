@@ -35,7 +35,7 @@ export const WhiteDatePicker = styled(DatePicker)({
 interface WhiteDatePikerProps {
   label: string;
   helperText?: string;
-  setData: (data: string) => void;
+  setData?: (data: string) => void;
 }
 
 export function WhiteDatePickerCompont({
@@ -43,7 +43,7 @@ export function WhiteDatePickerCompont({
   helperText,
   setData,
 }: WhiteDatePikerProps) {
-  return (
+  return setData ? (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
       <WhiteDatePicker
         label={
@@ -70,6 +70,32 @@ export function WhiteDatePickerCompont({
           const data = newValue as string;
           setData(data);
         }}
+      />
+    </LocalizationProvider>
+  ) : (
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
+      <WhiteDatePicker
+        disabled
+        label={
+          <Typography color="white" variant="body1">
+            {label}
+          </Typography>
+        }
+        slotProps={{
+          textField: {
+            helperText: helperText,
+            placeholder: "Dia/Mes/Ano",
+          },
+        }}
+        sx={{
+          color: "white",
+          width: "100%",
+          margin: "2% 1%",
+          "@media (max-width: 900px)": {
+            margin: "2% 0",
+          },
+        }}
+        disablePast={true}
       />
     </LocalizationProvider>
   );

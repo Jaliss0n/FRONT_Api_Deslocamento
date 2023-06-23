@@ -1,4 +1,4 @@
-import { TextField, styled } from "@mui/material";
+import { InputBaseComponentProps, TextField, styled } from "@mui/material";
 import { DeepMap, RegisterOptions, FieldError } from "react-hook-form";
 import { ReactNode } from "react";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -31,9 +31,12 @@ export const WhiteTextField = styled(TextField)({
 interface WhiteTextFieldProps {
   id: string;
   label: string | JSX.Element;
+  value?: unknown; 
+  inputProps?: InputBaseComponentProps | undefined;
+  defaultValue?: string;
   variant?: "standard" | "filled" | "outlined";
   fullWidth?: boolean;
-  register: any;
+  register?: any;
   error?: boolean;
   helperText?: string;
   sx?: object;
@@ -43,6 +46,9 @@ interface WhiteTextFieldProps {
 export const WhiteTextFieldComponent: React.FC<WhiteTextFieldProps> = ({
   id,
   label,
+  value,
+  inputProps,
+  defaultValue,
   variant = "outlined",
   fullWidth = true,
   register,
@@ -51,11 +57,13 @@ export const WhiteTextFieldComponent: React.FC<WhiteTextFieldProps> = ({
   sx,
   type,
 }) => {
-  return (
+  return register ? (
     <WhiteTextField
       id={id}
       type={type}
       fullWidth={fullWidth}
+      defaultValue={defaultValue}
+      inputProps={inputProps}
       label={
         <Typography color="white" variant="body1">
           {label}
@@ -65,6 +73,30 @@ export const WhiteTextFieldComponent: React.FC<WhiteTextFieldProps> = ({
       {...register(id)}
       error={!!error}
       helperText={helperText?.toString()}
+      sx={{
+        margin: "2% 1%",
+        "@media (max-width: 900px)": {
+          margin: "2% 0",
+        },
+        ...sx,
+      }}
+    />
+  ) : (
+    <WhiteTextField
+      id={id}
+      type={type}
+      fullWidth={fullWidth}
+      defaultValue={defaultValue}
+      inputProps={inputProps}
+      label={
+        <Typography color="white" variant="body1">
+          {label}
+        </Typography>
+      }
+      variant={variant}
+      error={!!error}
+      helperText={helperText?.toString()}
+      value={value}
       sx={{
         margin: "2% 1%",
         "@media (max-width: 900px)": {

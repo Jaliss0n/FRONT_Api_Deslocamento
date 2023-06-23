@@ -1,10 +1,9 @@
 import { CustomBox, TitleCard } from "../../ClientsGroup/Clients";
-import { Weather } from "../../Weather";
+import Weather from "../../Weather";
 import * as React from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
+import {  Button, ButtonGroup } from "@mui/material";
 import axios from "axios";
-import styled from "@emotion/styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
@@ -18,7 +17,6 @@ import {
 } from "@/pages/ClientsGroup/TableClients";
 import { ModalEdit } from "@/components/ModalDeslocamento/ModalEdit";
 import { ModalView } from "@/components/ModalDeslocamento/ModalView";
-import dayjs from "dayjs";
 
 interface TableDeslocamento {
   id: number;
@@ -43,8 +41,7 @@ interface PropsEdit {
   observacao: string;
 }
 
-export function TableDeslocamentos() {
-  
+export default function TableDeslocamentos() {
 
   const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
   const [openSnackbarEdit, setOpenSnackbarEdit] = React.useState(false);
@@ -174,9 +171,6 @@ export function TableDeslocamentos() {
               });
           } catch (error) {}
         };
-
-        
-
 
         return (
           <>
