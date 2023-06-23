@@ -23,6 +23,7 @@ import { WhiteDatePickerCompont } from "@/components/WhiteDatePicker";
 export const AreaInputsVertical = styled(Box)`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 dayjs.locale("pt-br");

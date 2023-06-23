@@ -1,5 +1,5 @@
 import { AreaInputs } from "@/pages/ClientsGroup/Clients";
-import { WhiteDatePicker, WhiteTextField } from "../../WTextField";
+import {  WhiteTextField } from "../../WTextField";
 import { Box, Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { ButtonSubmit } from "../../ModalsClient/ModalEdit";

@@ -18,6 +18,7 @@ export const ModalViewStyled = styled(Box)`
   @media screen and (max-width: 900px) {
     width: 80%;
     padding: 5%;
+    overflow-y: scroll;
   }
 `;
 

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Alert, AlertColor, AlertTitle, Button, Snackbar } from "@mui/material";
 import { useNavContext } from "../context/navProvider";
+import { ArrowRightIcon } from "@mui/x-date-pickers";
 
 const SnackbarContainer = styled(Snackbar)`
   position: fixed;
@@ -17,6 +18,10 @@ interface PropsSnack {
   visualizar: boolean;
   page:number;
 }
+
+const ButtonSneakBar = styled(Button)`
+  
+`
 
 export function Snackbars({
   openSnackbar,
@@ -37,7 +42,8 @@ export function Snackbars({
     >
       {visualizar ? (
         <Alert
-          action={<Button onClick={() => setNumberPag(page)}>Visualizar</Button>}
+          sx={{display: "flex", alignItems: 'center'}}
+          action={<Button variant="outlined" onClick={() => setNumberPag(page)}>Visualizar <ArrowRightIcon/></Button>}
           severity={variant}
         >
           <AlertTitle>{message}</AlertTitle>

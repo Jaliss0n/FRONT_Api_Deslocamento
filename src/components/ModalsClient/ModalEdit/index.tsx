@@ -192,7 +192,7 @@ export function ModalEdit({
           sx={{
             margin: "2% 2% 2% 0",
             "@media (max-width: 900px)": {
-              margin: "2% 0",
+              margin: "2% 0", width:'100%'
             },
           }}
         />

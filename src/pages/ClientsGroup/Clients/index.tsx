@@ -74,7 +74,8 @@ export const TitleCard = styled(Typography)`
 
 export const AreaInputs = styled(Box)`
   display: flex;
-
+  align-items: center;
+  
   @media screen and (max-width: 900px) {
     flex-direction: column;
   }
