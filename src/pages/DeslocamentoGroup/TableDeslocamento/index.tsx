@@ -297,7 +297,7 @@ export default function TableDeslocamentos() {
       <Snackbars
         openSnackbar={openSnackbarEditErro}
         handleSnackbarClose={handleSnackbarCloseEditErro}
-        message="A Data de validade não pode ser menor que a atual!"
+        message="O Kilometro Final e a Data de Deslocamento não podem ser menor que a inicial!"
         variant="warning"
         visualizar={false}
         page={0}

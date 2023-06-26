@@ -26,8 +26,8 @@ export const CustomBox = styled(Box)`
   @media screen and (max-width: 900px) {
     align-items: normal;
     background-image: none;
-    background-color: #384ce3;
-    height: auto;
+    background-color: #161c5b;
+    overflow-y: auto;
     width: 100%;
   }
 `;
@@ -35,7 +35,7 @@ export const CustomBox = styled(Box)`
 export const CustomFormCard = styled.form`
   display: flex;
   flex-direction: column;
-  background-color: #384ce3;
+  background-color: #161c5b;
   border-radius: 12px;
   padding: 3%;
   width: 50vw;
@@ -79,6 +79,16 @@ export const AreaInputs = styled(Box)`
     flex-direction: column;
   }
 `;
+
+export const ButtonSubmitForm = styled(Button)`
+  background-color: #2ca4ac;
+  color: white;
+  font-weight: 600;
+  margin: 4% 0;
+  :hover{
+    background-color: #1f6e74;
+  }
+`
 
 export const createClientSchema = z.object({
   tipoDocumento: z.string().nonempty("O Tipo de Documento é obrigatório!"),
@@ -228,14 +238,14 @@ export default function Clients() {
           />
         </AreaInputs>
 
-        <Button
+        <ButtonSubmitForm
           sx={{ marginTop: "5%" }}
           variant="contained"
           color="inherit"
           type="submit"
         >
           Enviar
-        </Button>
+        </ButtonSubmitForm>
         <Snackbars
           openSnackbar={openSnackbar}
           handleSnackbarClose={handleSnackbarClose}

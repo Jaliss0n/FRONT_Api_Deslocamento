@@ -15,6 +15,9 @@ import AccordeonCustom from "../Acoordeon";
 import GroupsIcon from "@mui/icons-material/Groups";
 import switchScreen from "../context/switchScreen";
 import { useNavContext } from "../context/navProvider";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { Button } from "@mui/material";
+import { useRouter } from "next/router";
 
 const drawerWidth = 280;
 
@@ -29,12 +32,20 @@ const CustomToolbar = styled(Toolbar)`
   margin: 8%;
 `;
 
+const ButtonLogof = styled(Button)`
+  background-color: #353c85;
+  margin: 2% 0;
+  &:hover {
+    background-color: #1d266b;
+  }
+`;
+
 export default function Header(props: Props) {
+  const router = useRouter();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const {numberPag} = useNavContext();
-
+  const { numberPag } = useNavContext();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -43,7 +54,7 @@ export default function Header(props: Props) {
   const drawer = (
     <Box
       sx={{
-        backgroundColor: "#3747c0",
+        backgroundColor: "#161c5b",
         padding: "0 5%",
         minHeight: "100vh",
         overflowY: "scroll",
@@ -87,9 +98,18 @@ export default function Header(props: Props) {
         iconsArray={[<PersonAddAlt1Icon />, <GroupsIcon />]}
         pages={[6, 7]}
       />
+      <ButtonLogof
+        startIcon={<LogoutIcon />}
+        fullWidth
+        variant="contained"
+        onClick={() => router.push("/")}
+      >
+        {" "}
+        Logout
+      </ButtonLogof>
       <Box sx={{ marginTop: "auto" }}>
         <Typography color="white" variant="body1">
-          Criado por Jalisson
+          Criado por Jalisson ❤️
         </Typography>
       </Box>
     </Box>
@@ -104,8 +124,8 @@ export default function Header(props: Props) {
       <AppBar
         position="fixed"
         sx={{
-          backgroundColor: "#3747c0",
-          display: {sm: 'none'}
+          backgroundColor: "#242b75",
+          display: { sm: "none" },
         }}
       >
         <Toolbar>
@@ -166,8 +186,8 @@ export default function Header(props: Props) {
           flexGrow: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
-      > 
-        <Toolbar sx={{ display: {sm: 'none'}}} />
+      >
+        <Toolbar sx={{ display: { sm: "none" } }} />
         {switchScreen(numberPag)}
       </Box>
     </Box>

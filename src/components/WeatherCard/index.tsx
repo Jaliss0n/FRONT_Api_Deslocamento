@@ -14,7 +14,7 @@ interface WeatherCardProps {
 const CustomCard = styled(Card)`
   background-color: #2ca4ac;
   width: 100%;
-  margin: 4% 0;
+  margin: 2% 0;
 `;
 
 const WeatherCard: React.FC<WeatherCardProps> = ({
@@ -29,7 +29,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
         <Typography
           sx={{ display: "flex", alignItems: "center" }}
           color="white"
-          variant="h6"
+          variant="body1"
           gutterBottom
         >
           <EventIcon sx={{ marginRight: "3%" }} />{" "}

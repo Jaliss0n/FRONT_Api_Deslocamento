@@ -15,6 +15,7 @@ import "dayjs/locale/pt-br";
 import dayjs from "dayjs";
 import {
   AreaInputs,
+  ButtonSubmitForm,
   CustomBox,
   CustomFormCard,
   TitleCard,
@@ -300,14 +301,14 @@ export default function Deslocamento() {
           />
         </AreaInputs>
 
-        <Button
+        <ButtonSubmitForm
           sx={{ marginTop: "5%" }}
           variant="contained"
           color="inherit"
           type="submit"
         >
           Enviar
-        </Button>
+        </ButtonSubmitForm>
         <Snackbars
           openSnackbar={openSnackbar}
           handleSnackbarClose={handleSnackbarClose}

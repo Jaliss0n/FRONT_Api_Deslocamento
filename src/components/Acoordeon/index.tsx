@@ -4,10 +4,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import {
   Divider,
   IconProps,
@@ -21,11 +17,11 @@ import styled from "@emotion/styled";
 import { useNavContext } from "../context/navProvider";
 
 const BlueListIcon = styled(ListItemButton)`
-  background-color: #4154e4;
+  background-color: #1d266f;
   margin: 10px 0 10px 0;
   border-radius: 12px;
   &:hover {
-    background-color: #3747c5;
+    background-color: #1d266b;
   }
 `;
 
@@ -47,7 +43,7 @@ export default function AccordeonCustom({
 
   return (
     <div style={{ marginBottom: "10%" }}>
-      <Accordion sx={{ backgroundColor: "#5164f0", margin: "10% 0 0 0" }}>
+      <Accordion sx={{ backgroundColor: "#353c85", margin: "10% 0 0 0" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: "#fff" }} />}
           aria-controls="panel1a-content"

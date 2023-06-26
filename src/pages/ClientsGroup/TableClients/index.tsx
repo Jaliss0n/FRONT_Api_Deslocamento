@@ -18,7 +18,7 @@ import { apiUrl } from "@/data/api";
 export const TableContainer = styled(Box)`
   position: relative;
   width: 70%;
-  background-color: #384ce3;
+  background-color: #161c5b;
   border-radius: 12px;
   padding: 3%;
 

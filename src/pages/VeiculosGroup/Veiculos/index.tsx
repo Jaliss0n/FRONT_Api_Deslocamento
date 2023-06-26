@@ -11,6 +11,7 @@ import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
 import { AreaInputsVertical } from "@/pages/CondutorGroup/Condutor";
 import {
+  ButtonSubmitForm,
   CustomBox,
   CustomFormCard,
   TitleCard,
@@ -117,14 +118,14 @@ export default function Veiculos() {
           />
         </AreaInputsVertical>
 
-        <Button
+        <ButtonSubmitForm
           sx={{ marginTop: "5%" }}
           variant="contained"
           color="inherit"
           type="submit"
         >
           Enviar
-        </Button>
+        </ButtonSubmitForm>
         <Snackbars
           openSnackbar={openSnackbar}
           handleSnackbarClose={handleSnackbarClose}

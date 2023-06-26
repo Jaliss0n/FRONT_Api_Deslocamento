@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { useForm, SubmitHandler, DeepPartial } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import Weather from "../../Weather";
 import { Snackbars } from "@/components/Snackbars";
 import { apiUrl } from "@/data/api";
 import {
+  ButtonSubmitForm,
   CustomBox,
   CustomFormCard,
   TitleCard,
@@ -34,7 +35,7 @@ export const createCondutorSchema = z.object({
     .nonempty("A Categoria da Habilitação é obrigatória!"),
   numeroHabilitação: z
     .string()
-    .min(8, "O Numero da habilitação deve ter pelo menos 10 caracteres"),
+    .min(11, "O Numero da habilitação deve ter pelo menos 11 caracteres"),
   nome: z.string().min(2, "O Nome deve ter pelo menos 2 caracteres"),
 });
 
@@ -123,14 +124,14 @@ export default function Condutor() {
           />
         </AreaInputsVertical>
 
-        <Button
+        <ButtonSubmitForm
           sx={{ marginTop: "5%" }}
           variant="contained"
           color="inherit"
           type="submit"
         >
           Enviar
-        </Button>
+        </ButtonSubmitForm>
         <Snackbars
           openSnackbar={openSnackbar}
           handleSnackbarClose={handleSnackbarClose}
